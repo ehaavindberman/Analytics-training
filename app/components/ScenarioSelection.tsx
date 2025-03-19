@@ -1,99 +1,112 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Clock, Share2 } from 'lucide-react'
+import { CheckCircle, Clock, Share2, Lock } from "lucide-react"
 
 type CompletedScenario = {
-  id: number;
-  time: number;
-};
+  id: number
+  time: number
+}
 
 type Props = {
-  onSelectScenario: (scenario: number) => void;
-  completedScenarios: CompletedScenario[];
-};
+  onSelectScenario: (scenario: number) => void
+  completedScenarios: CompletedScenario[]
+}
 
 const scenarios = [
   {
     id: 1,
-    title: "Declining Signups",
-    description: "Investigate why signups have dropped significantly over the past few days."
+    title: "The Vanishing Signups",
+    description: "Uncover the mystery behind the sudden drop in user registrations.",
   },
   {
     id: 2,
-    title: "Changing Visitor Patterns",
-    description: "Analyze recent changes in visitor patterns across different channels and devices."
+    title: "The Social Media Conundrum",
+    description: "Investigate the peculiar changes in visitor patterns across channels.",
   },
   {
     id: 3,
-    title: "Organic Traffic Spike",
-    description: "Examine the impact of a sudden change in organic traffic on overall signup rates."
-  }
-];
+    title: "The Organic Traffic Surge",
+    description: "Analyze the impact of an unexpected influx of organic visitors.",
+  },
+]
 
 export default function ScenarioSelection({ onSelectScenario, completedScenarios }: Props) {
   const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}m ${remainingSeconds}s`;
-  };
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}m ${remainingSeconds}s`
+  }
 
   const handleShare = async (scenarioId: number, time: number) => {
-    const scenario = scenarios.find(s => s.id === scenarioId);
-    const shareText = `I completed the "${scenario?.title}" scenario in the Analytics Training Platform in ${formatTime(time)}! Can you beat my time?`;
-    
+    const scenario = scenarios.find((s) => s.id === scenarioId)
+    const shareText = `I completed the "${scenario?.title}" challenge in Analytics Adventure in ${formatTime(time)}! Can you beat my time?`
+
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'My Analytics Training Achievement',
+          title: "My Analytics Adventure Achievement",
           text: shareText,
           url: window.location.href,
-        });
+        })
       } catch (error) {
-        console.error('Error sharing:', error);
+        console.error("Error sharing:", error)
       }
     } else {
       // Fallback for browsers that don't support the Web Share API
-      alert('Sharing is not supported on this browser. You can copy the following text:\n\n' + shareText);
+      alert("Sharing is not supported on this browser. You can copy the following text:\n\n" + shareText)
     }
-  };
+  }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {scenarios.map((scenario) => {
-        const completedScenario = completedScenarios.find(s => s.id === scenario.id);
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {scenarios.map((scenario, index) => {
+        const completedScenario = completedScenarios.find((s) => s.id === scenario.id)
+        const isLocked = index > 0 && !completedScenarios.find((s) => s.id === scenario.id - 1)
+
         return (
-          <Card key={scenario.id}>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>Scenario {scenario.id}: {scenario.title}</span>
-                {completedScenario && (
-                  <CheckCircle className="text-green-500" />
-                )}
+          <Card
+            key={scenario.id}
+            className={`overflow-hidden transition-all duration-300 ${isLocked ? "opacity-50" : "hover:shadow-lg"}`}
+          >
+            <CardHeader className="bg-gradient-to-r from-primary to-accent pb-8">
+              <CardTitle className="flex justify-between items-center text-primary-foreground">
+                <span>
+                  Level {scenario.id}: {scenario.title}
+                </span>
+                {completedScenario ? (
+                  <CheckCircle className="text-accent" />
+                ) : isLocked ? (
+                  <Lock className="text-muted" />
+                ) : null}
               </CardTitle>
-              <CardDescription>{scenario.description}</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-8">
+              <CardDescription className="mb-4">{scenario.description}</CardDescription>
               <div className="flex flex-col space-y-2">
-                <div className="flex justify-between items-center">
-                  <Button onClick={() => onSelectScenario(scenario.id)}>
-                    {completedScenario ? "Revisit Scenario" : "Start Scenario"}
-                  </Button>
-                  {completedScenario && (
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Clock className="mr-1 h-4 w-4" />
-                      {formatTime(completedScenario.time)}
-                    </div>
-                  )}
-                </div>
+                <Button
+                  onClick={() => onSelectScenario(scenario.id)}
+                  disabled={isLocked}
+                  className={completedScenario ? "bg-accent hover:bg-accent/90 text-accent-foreground" : ""}
+                >
+                  {isLocked ? "Locked" : completedScenario ? "Replay Challenge" : "Start Challenge"}
+                </Button>
                 {completedScenario && (
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => handleShare(scenario.id, completedScenario.time)}
-                  >
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Share Result
-                  </Button>
+                  <>
+                    <div className="flex items-center justify-center text-sm text-muted-foreground">
+                      <Clock className="mr-1 h-4 w-4" />
+                      Best Time: {formatTime(completedScenario.time)}
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => handleShare(scenario.id, completedScenario.time)}
+                    >
+                      <Share2 className="mr-2 h-4 w-4" />
+                      Share Achievement
+                    </Button>
+                  </>
                 )}
               </div>
             </CardContent>
@@ -101,6 +114,6 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
         )
       })}
     </div>
-  );
+  )
 }
 
