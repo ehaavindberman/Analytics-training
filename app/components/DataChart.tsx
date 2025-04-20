@@ -13,41 +13,49 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts"
-
-type VisitorData = {
-  date: string
-  hour: number
-  device: "desktop" | "mobile" | "tablet"
-  browser: "chrome" | "firefox" | "safari" | "edge"
-  channel: "organic" | "paid" | "social" | "email"
-  isSignup: boolean
-}
+import DataChartLoader from "./DataChartLoader"
 
 type Props = {
-  data: VisitorData[]
   yAxis: "visitors" | "signups" | "signup_rate"
   breakdown: "none" | "device" | "browser" | "channel"
   chartType: "line" | "area"
+  scenario: number
+  filters: {
+    device: string;
+    browser: string;
+    channel: string;
+  }
 }
 
-export default function DataChart({ data, yAxis, breakdown, chartType }: Props) {
+export default function DataChart({ scenario, yAxis, breakdown, filters, chartType }: Props) {
+  const data = DataChartLoader({scenario})
+
   const chartData = useMemo(() => {
-    const dailyData = data.reduce(
+
+    const filteredData = data.filter((row) => {
+      return (
+        (!filters.device || filters.device === "all" || row.device === filters.device) &&
+        (!filters.browser || filters.browser === "all" || row.browser === filters.browser) &&
+        (!filters.channel || filters.channel === "all" || row.channel === filters.channel)
+      )
+    })
+
+    const dailyData = filteredData.reduce(
       (acc, curr) => {
-        const date = curr.date
+        const date = curr.day
         if (!acc[date]) {
           acc[date] = { date, visitors: 0, signups: 0 }
         }
-        acc[date].visitors++
-        if (curr.isSignup) acc[date].signups++
+        acc[date].visitors += curr.visitors
+        acc[date].signups += curr.signups
 
         if (breakdown !== "none") {
           const breakdownValue = curr[breakdown]
           if (!acc[date][breakdownValue]) {
             acc[date][breakdownValue] = { visitors: 0, signups: 0 }
           }
-          acc[date][breakdownValue].visitors++
-          if (curr.isSignup) acc[date][breakdownValue].signups++
+          acc[date][breakdownValue].visitors += curr.visitors
+          acc[date][breakdownValue].signups += curr.signups
         }
 
         return acc
@@ -61,11 +69,11 @@ export default function DataChart({ data, yAxis, breakdown, chartType }: Props) 
       ...(breakdown !== "none" &&
         Object.fromEntries(
           Object.entries(day)
-            .filter(([key]) => key !== "date" && key !== "visitors" && key !== "signups")
+            .filter(([key]) => key !== "day" && key !== "visitors" && key !== "signups")
             .map(([key, value]: [string, any]) => [key, { ...value, signup_rate: value.signups / value.visitors }]),
         )),
     }))
-  }, [data, breakdown])
+  }, [data, breakdown, filters])
 
   const breakdownValues = useMemo(() => {
     if (breakdown === "none") return []
@@ -78,11 +86,13 @@ export default function DataChart({ data, yAxis, breakdown, chartType }: Props) 
     const ChartComponent = chartType === "line" ? LineChart : AreaChart
     const DataComponent = chartType === "line" ? Line : Area
 
+    // console.log("Data loaded and ready to go:", chartData)
+
     return (
       <ResponsiveContainer width="100%" height="100%">
         <ChartComponent data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
+          <XAxis dataKey="day" />
           <YAxis />
           <Tooltip />
           <Legend />

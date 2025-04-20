@@ -13,13 +13,17 @@ import { ScenarioTimer } from "./ScenarioTimer"
 import { ArrowLeft, CheckCircle, Glasses, Code, Megaphone, Search } from "lucide-react"
 import { scenarios } from "@/app/scenarios"
 
+type DeviceType = "desktop" | "mobile" | "tablet"
+type BrowserType = "chrome" | "firefox" | "safari" | "edge"
+type ChannelType = "organic" | "paid" | "social" | "email"
+
 type VisitorData = {
-  date: string
-  hour: number
-  device: "desktop" | "mobile" | "tablet"
-  browser: "chrome" | "firefox" | "safari" | "edge"
-  channel: "organic" | "paid" | "social" | "email"
-  isSignup: boolean
+  day: string
+  device: DeviceType
+  browser: BrowserType
+  channel: ChannelType
+  visitors: number
+  signups: number
 }
 
 type ChartType = "line" | "area"
@@ -61,24 +65,24 @@ export default function AnalyticsDashboard({
   const [time, setTime] = useState(initialTime)
   const [extraInfo, setExtraInfo] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetch(`/api/data?scenario=${scenario}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data)
-        setFilteredData(data)
-      })
-  }, [scenario])
+  // useEffect(() => {
+  //   fetch(`/api/data?scenario=${scenario}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setData(data)
+  //       setFilteredData(data)
+  //     })
+  // }, [scenario])
 
-  useEffect(() => {
-    const newFilteredData = data.filter(
-      (item) =>
-        (filters.device === "all" || item.device === filters.device) &&
-        (filters.browser === "all" || item.browser === filters.browser) &&
-        (filters.channel === "all" || item.channel === filters.channel),
-    )
-    setFilteredData(newFilteredData)
-  }, [data, filters])
+  // useEffect(() => {
+  //   const newFilteredData = data.filter(
+  //     (item) =>
+  //       (filters.device === "all" || item.device === filters.device) &&
+  //       (filters.browser === "all" || item.browser === filters.browser) &&
+  //       (filters.channel === "all" || item.channel === filters.channel),
+  //   )
+  //   setFilteredData(newFilteredData)
+  // }, [data, filters])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -220,7 +224,7 @@ export default function AnalyticsDashboard({
             </CardHeader>
             <CardContent>
               <div className="h-[400px] w-full">
-                <DataChart data={filteredData} yAxis={yAxis} breakdown={breakdown} chartType={chartType} />
+                <DataChart scenario={scenario} yAxis={yAxis} breakdown={breakdown} filters={filters} chartType={chartType} />
               </div>
             </CardContent>
           </Card>
