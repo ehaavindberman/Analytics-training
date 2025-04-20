@@ -44,19 +44,12 @@ export default function DataChartLoader({scenario}: Props) {
   const [data, setData] = useState<VisitorData[]>([])
   const csvUrl = `/scenarios/scenario${scenario}.csv`
 
-
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Fetching data from:", csvUrl)
       try {
         const response = await fetch(csvUrl)
-        console.log("Response status:", response.status)
         const text = await response.text()
-        console.log("Raw CSV text:", text.slice(0, 200)) // first 200 chars
-  
         const parsedData = parseCSV(text)
-        // console.log("Parsed CSV data:", parsedData)
-  
         setData(parsedData)
       } catch (error) {
         console.error("Error loading data:", error)
@@ -68,5 +61,3 @@ export default function DataChartLoader({scenario}: Props) {
 
   return data
 }
-
-

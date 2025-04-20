@@ -13,19 +13,6 @@ import { FindingsSubmit } from "./FindingsSubmit"
 import { FiltersCard } from "./FiltersCard"
 import { ExtraInfoCard } from "./ExtraInfoCard"
 
-type DeviceType = "desktop" | "mobile" | "tablet"
-type BrowserType = "chrome" | "firefox" | "safari" | "edge"
-type ChannelType = "organic" | "paid" | "social" | "email"
-
-type VisitorData = {
-  day: string
-  device: DeviceType
-  browser: BrowserType
-  channel: ChannelType
-  visitors: number
-  signups: number
-}
-
 type ChartType = "line" | "area"
 
 type ExtraInfoButton = {
@@ -48,8 +35,6 @@ export default function AnalyticsDashboard({
   initialTime: number
   updateScenarioTime: (id: number, time: number) => void
 }) {
-  const [data, setData] = useState<VisitorData[]>([])
-  const [filteredData, setFilteredData] = useState<VisitorData[]>([])
   const [yAxis, setYAxis] = useState<"visitors" | "signups" | "signup_rate">("signups")
   const [breakdown, setBreakdown] = useState<"none" | "device" | "browser" | "channel">("none")
   const [chartType, setChartType] = useState<ChartType>("line")
