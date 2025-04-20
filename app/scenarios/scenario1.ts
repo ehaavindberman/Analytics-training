@@ -27,16 +27,5 @@ export const scenario1: ScenarioData = {
         "Upon inspecting the app, you notice that the mobile signup process seems to have a new step that wasn't there before. This additional step might be causing friction for mobile users.",
     },
   ],
-  dataGenerationRules: (day) => {
-    if (day >= 8) {
-      return {
-        deviceDistribution: {
-          mobile: 0.3, // Reduce mobile traffic
-        },
-        signupProbabilityMultiplier: 0.5, // Reduce signup probability for all devices
-      }
-    }
-    return {}
-  },
 }
 

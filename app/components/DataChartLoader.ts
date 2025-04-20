@@ -65,17 +65,6 @@ export default function DataChartLoader({scenario}: Props) {
   
     fetchData()
   }, [csvUrl])
-//   useEffect(() => {
-//     fetch(csvUrl)
-//       .then((res) => res.text())
-//       .then((csvText) => {
-//         const parsed = parseCSV(csvText)
-//         setData(parsed)
-//       })
-//       .catch((err) => {
-//         console.error("Error loading CSV:", err)
-//       })
-//   }, [csvUrl])
 
   return data
 }

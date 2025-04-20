@@ -49,16 +49,5 @@ export const scenario3: ScenarioData = {
         "The SEO team mentions that they've recently optimized several key landing pages and updated meta descriptions. They've also noticed an uptick in backlinks from high-authority domains.",
     },
   ],
-  dataGenerationRules: (day) => {
-    if (day >= 8) {
-      return {
-        channelDistribution: {
-          organic: day === 8 ? 2 : day === 9 ? 1.5 : 1.2, // Spike in organic traffic, tapering off
-        },
-        signupProbabilityMultiplier: 0.8, // Slight decrease in signup rate due to new visitors
-      }
-    }
-    return {}
-  },
 }
 

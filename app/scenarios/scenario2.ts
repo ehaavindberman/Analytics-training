@@ -35,18 +35,5 @@ export const scenario2: ScenarioData = {
         "The release cycle information shows that a new update was pushed 8 days ago, which included changes to the mobile UI and social media integration.",
     },
   ],
-  dataGenerationRules: (day) => {
-    if (day >= 8) {
-      return {
-        channelDistribution: {
-          social: 0.5, // Reduce social traffic
-        },
-        deviceDistribution: {
-          mobile: 0.5, // Reduce mobile traffic from social channels
-        },
-      }
-    }
-    return {}
-  },
 }
 

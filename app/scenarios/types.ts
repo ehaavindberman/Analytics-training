@@ -15,11 +15,5 @@ export type ScenarioData = {
     timeAdded: number
     infoText: string
   }[]
-  dataGenerationRules: (day: number) => Partial<{
-    visitorMultiplier: number
-    signupProbabilityMultiplier: number
-    deviceDistribution: Partial<Record<"desktop" | "mobile" | "tablet", number>>
-    channelDistribution: Partial<Record<"organic" | "paid" | "social" | "email", number>>
-  }>
 }
 
