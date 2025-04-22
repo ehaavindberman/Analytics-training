@@ -86,8 +86,6 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
     const ChartComponent = chartType === "line" ? LineChart : AreaChart
     const DataComponent = chartType === "line" ? Line : Area
 
-    // console.log("Data loaded and ready to go:", chartData)
-
     return (
       <ResponsiveContainer width="100%" height="100%">
         <ChartComponent data={chartData}>
@@ -124,4 +122,3 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
 
   return renderChart()
 }
-
