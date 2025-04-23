@@ -12,6 +12,7 @@ import { ChartCard } from "./cards/ChartCard"
 import { FindingsSubmit } from "./cards/FindingsSubmit"
 import { FiltersCard } from "./cards/FiltersCard"
 import { ExtraInfoCard } from "./cards/ExtraInfoCard"
+import ScenarioDescriptionCard from "./cards/ScenarioDescriptionCard"
 
 type ChartType = "line" | "area"
 
@@ -115,7 +116,11 @@ export default function AnalyticsDashboard({
           </div>
         )}
       </div>
+      <ScenarioDescriptionCard
+        scenario={scenario}
+      />     
       <div className="grid grid-cols-3 gap-4">
+
         <div className="col-span-2 space-y-4">
           <ChartControls
             yAxis={yAxis}
@@ -142,8 +147,15 @@ export default function AnalyticsDashboard({
           />
         </div>
         <div className="space-y-4">
-          <FiltersCard filters={filters} setFilters={setFilters} />
-          <ExtraInfoCard buttons={getExtraInfoButtons()} isCompleted={isCompleted} extraInfo={extraInfo}/>
+          <FiltersCard 
+            filters={filters} 
+            setFilters={setFilters} 
+          />
+          <ExtraInfoCard 
+            buttons={getExtraInfoButtons()} 
+            isCompleted={isCompleted} 
+            extraInfo={extraInfo}
+          />
         </div>
       </div>
     </div>

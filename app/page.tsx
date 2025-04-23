@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import AnalyticsDashboard from "./components/AnalyticsDashboard"
-import IntroductionScreen from "./components/IntroductionScreen"
 import SuccessScreen from "./components/SuccessScreen"
 import ScenarioSelection from "./components/ScenarioSelection"
 import GameIntro from "./components/GameIntro"
@@ -36,10 +35,6 @@ export default function Home() {
   const handleStartGame = () => {
     setShowGameIntro(false)
     setShowScenarioSelection(true)
-  }
-
-  const handleStart = () => {
-    setShowIntro(false)
   }
 
   const handleSuccess = (time: number) => {
@@ -96,8 +91,6 @@ export default function Home() {
           <h1 className="text-4xl font-bold mb-8 text-center text-primary">Analytics Adventure</h1>
           <ScenarioSelection onSelectScenario={handleSelectScenario} completedScenarios={completedScenarios} />
         </div>
-      ) : showIntro ? (
-        <IntroductionScreen onStart={handleStart} scenario={scenario} />
       ) : showSuccess ? (
         <SuccessScreen onContinue={handleContinue} scenario={scenario} />
       ) : (
