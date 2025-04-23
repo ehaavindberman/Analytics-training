@@ -2,20 +2,20 @@ import type { ScenarioData } from "./types"
 
 export const scenario1: ScenarioData = {
   id: 1,
-  title: "The Vanishing Signups",
+  title: "Warmup Challenge 1",
   description: "Uncover the mystery behind the sudden drop in the signup rate",
   introText: [
-    "Your stakeholders have noticed that the signup rate has decreased for the last few days.",
-    "Your task is to figure out why, submit your answer below!"
+    "Your CEO noticed that the signup rate has decreased for the last few days!",
+    "Your task is to figure out why. Submit your answer below."
   ],
   successText: [
-    "You successfully identified that mobile signups dropped significantly after the 8th day. This kind of insight is crucial for quickly addressing issues that affect user acquisition.",
-    "In a real-world scenario, this finding would prompt an investigation into recent changes in the mobile app or signup process, potentially uncovering a bug or UX issue that needs to be fixed.",
+    "Great work, you noticed that mobile signups dropped to none impacting the overall signup rate.",
+    "We'll get the devs on it, sounds like a recent addition to the mobile signup flow is stopping users from actually signing up!",
   ],
   correctFindingsKeywords: ["mobile", "signup"],
   feedbackText: {
-    correct: "Correct! You've identified that mobile signups dropped significantly.",
-    incorrect: "Not quite. Try looking at the signup rates for different devices.",
+    correct: "Correct!",
+    incorrect: "Not quite. Try again.",
   },
   extraInfoButtons: [
     {

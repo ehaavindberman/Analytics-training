@@ -11,7 +11,7 @@ import seaborn as sns
 
 # ===== Config ===== #
 np.random.seed(12)
-filename = 'scenario3.csv'
+filename = '../../public/scenarios/scenario3.csv'
 DAYS = 10
 START_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1) - timedelta(days=DAYS)
 END_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1)

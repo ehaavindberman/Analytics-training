@@ -2,22 +2,20 @@ import type { ScenarioData } from "./types"
 
 export const scenario2: ScenarioData = {
   id: 2,
-  title: "The Social Media Conundrum",
+  title: "Warmup challenge 2",
   description: "Investigate the peculiar changes in visitor patterns across channels.",
   introText: [
-    "Excellent work on your previous mission! Now, we face a new enigma. Our visitor patterns have suddenly shifted, and we suspect it's affecting our mobile users from social media channels.",
-    "Your task: Analyze the data, pinpoint the changes in visitor behavior, and uncover the truth behind this social media mystery.",
-    "New feature: In addition to inspecting the app, you can now check the release cycle. This will add 1 minute to your time.",
+    "We're back with another signup rate isue. This time the product team noticed",
+    "that the signup rate has been low for the past two days. Your task is to figure out what's going on."
   ],
   successText: [
-    "You correctly identified that mobile visitors from the social channel dropped by half starting from the 8th day. This observation is vital for understanding changes in user behavior and the effectiveness of our marketing channels.",
-    "In practice, this insight would lead to an investigation of recent changes in social media algorithms, our social media campaign strategies, or potential issues with how our content is displayed on mobile devices from social media links.",
+    "Great work finding that social visitors radically decreased, we took this to the social team and they found",
+    "an issue with the links on their most recent posts which they've quickly fixed."
   ],
-  correctFindingsKeywords: ["mobile", "social", "visitors"],
+  correctFindingsKeywords: ["social", "visitors"],
   feedbackText: {
-    correct:
-      "Excellent work! You've correctly identified that mobile visitors from the social channel dropped by half.",
-    incorrect: "Not quite. Try looking at the visitors for different devices and channels.",
+    correct: "Correct!",
+    incorrect: "Not quite. Try again.",
   },
   extraInfoButtons: [
     {
@@ -25,16 +23,16 @@ export const scenario2: ScenarioData = {
       label: "Inspect App",
       timeAdded: 30,
       infoText:
-        "Your app inspection reveals that the social media sharing buttons on mobile devices are not functioning correctly. This could explain the drop in mobile visitors from social channels.",
+        "You don't find any issues with the signup flow from the social entrypoints.",
     },
     {
       icon: "Code",
       label: "Check Release Cycle",
       timeAdded: 60,
       infoText:
-        "The release cycle information shows that a new update was pushed 8 days ago, which included changes to the mobile UI and social media integration.",
-    },
+        "The release cycle information shows there have been some small changes with the urls for our website",
+    }
   ],
-  yAxis: "signups",
+  yAxis: "signup_rate",
 }
 

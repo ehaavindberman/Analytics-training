@@ -2,22 +2,19 @@ import type { ScenarioData } from "./types"
 
 export const scenario3: ScenarioData = {
   id: 3,
-  title: "The Organic Traffic Surge",
+  title: "Warmup challenge 3",
   description: "Analyze the impact of an unexpected influx of organic visitors.",
   introText: [
-    "Congratulations on making it to the final challenge! We've detected an unexpected surge in organic traffic, but its impact on our signup rates is unclear.",
-    "Your ultimate mission: Investigate this traffic anomaly, determine its effects on our key metrics, and provide insights that could shape our future strategies.",
-    "New features: You now have access to all information gathering tools, including asking the marketing team and consulting the SEO team. Each of these new options will add 1 minute to your time.",
+    "The CMO was poking around in our dashbaords and noticed that the last few days we've had a decrease in signup rates!",
+    "Let's get this resolved quickly for them. Submit your answer below.",
   ],
   successText: [
-    "Great job! You've correctly identified the spike in organic traffic and its impact on the overall signup rate. This kind of analysis is crucial for understanding how changes in traffic sources can affect our key performance indicators.",
-    "In a real-world scenario, this finding would prompt further investigation into the cause of the organic traffic spike, such as changes in search engine algorithms, viral content, or successful SEO efforts. It would also lead to discussions on how to optimize our signup process for this influx of organic visitors.",
+    "",
   ],
   correctFindingsKeywords: ["organic", "spike", "signup rate"],
   feedbackText: {
-    correct:
-      "Great job! You've correctly identified the spike in organic traffic and its impact on the overall signup rate.",
-    incorrect: "Not quite. Try looking at the changes in organic traffic and how it affects the overall signup rate.",
+    correct: "Correct!",
+    incorrect: "Not quite. Try again.",
   },
   extraInfoButtons: [
     {
@@ -25,7 +22,7 @@ export const scenario3: ScenarioData = {
       label: "Inspect App",
       timeAdded: 30,
       infoText:
-        "Inspecting the app shows that a new pop-up for email newsletter signups has been added to the homepage. This might be affecting user behavior, especially for organic traffic.",
+        "You don't note anything particular standing out on the site.",
     },
     {
       icon: "Code",
@@ -39,7 +36,7 @@ export const scenario3: ScenarioData = {
       label: "Ask Marketing Team",
       timeAdded: 60,
       infoText:
-        "The marketing team reports that they recently adjusted their social media strategy, focusing more on desktop users. They've also increased spending on search engine marketing.",
+        "The marketing team reports that they haven't changed anything, but did hear from the PR team that we've had some recent press",
     },
     {
       icon: "Search",
@@ -49,6 +46,6 @@ export const scenario3: ScenarioData = {
         "The SEO team mentions that they've recently optimized several key landing pages and updated meta descriptions. They've also noticed an uptick in backlinks from high-authority domains.",
     },
   ],
-  yAxis: "signups"
+  yAxis: "signup_rate"
 }
 

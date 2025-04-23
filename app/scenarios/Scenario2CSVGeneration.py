@@ -9,7 +9,7 @@ import seaborn as sns
 
 # ===== Config ===== #
 np.random.seed(5)
-filename = 'scenario2.csv'
+filename = '../../public/scenariosscenario2.csv'
 DAYS = 10
 START_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1) - timedelta(days=DAYS)
 END_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1)
