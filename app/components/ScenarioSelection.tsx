@@ -3,6 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Clock, Share2, Lock } from "lucide-react"
+import { scenarios } from "@/app/scenarios"
+import type { ScenarioData } from "@/app/scenarios/types"
+
 
 type CompletedScenario = {
   id: number
@@ -10,27 +13,9 @@ type CompletedScenario = {
 }
 
 type Props = {
-  onSelectScenario: (scenario: number) => void
+  onSelectScenario: (scenario: ScenarioData) => void
   completedScenarios: CompletedScenario[]
 }
-
-const scenarios = [
-  {
-    id: 1,
-    title: "The Vanishing Signups",
-    description: "Uncover the mystery behind the sudden drop in user registrations.",
-  },
-  {
-    id: 2,
-    title: "The Social Media Conundrum",
-    description: "Investigate the peculiar changes in visitor patterns across channels.",
-  },
-  {
-    id: 3,
-    title: "The Organic Traffic Surge",
-    description: "Analyze the impact of an unexpected influx of organic visitors.",
-  },
-]
 
 export default function ScenarioSelection({ onSelectScenario, completedScenarios }: Props) {
   const formatTime = (seconds: number) => {
@@ -54,7 +39,6 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
         console.error("Error sharing:", error)
       }
     } else {
-      // Fallback for browsers that don't support the Web Share API
       alert("Sharing is not supported on this browser. You can copy the following text:\n\n" + shareText)
     }
   }
@@ -73,7 +57,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
             <CardHeader className="bg-gradient-to-r from-primary to-accent pb-8">
               <CardTitle className="flex justify-between items-center text-primary-foreground">
                 <span>
-                  Level {scenario.id}: {scenario.title}
+                  Scenario {scenario.id}: {scenario.title}
                 </span>
                 {completedScenario ? (
                   <CheckCircle className="text-accent" />
@@ -86,7 +70,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
               <CardDescription className="mb-4">{scenario.description}</CardDescription>
               <div className="flex flex-col space-y-2">
                 <Button
-                  onClick={() => onSelectScenario(scenario.id)}
+                  onClick={() => onSelectScenario(scenario)}
                   disabled={isLocked}
                   className={completedScenario ? "bg-accent hover:bg-accent/90 text-accent-foreground" : ""}
                 >
@@ -116,4 +100,3 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
     </div>
   )
 }
-

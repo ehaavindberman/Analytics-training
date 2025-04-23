@@ -15,5 +15,6 @@ export type ScenarioData = {
     timeAdded: number
     infoText: string
   }[]
+  yAxis: "visitors" | "signups" | "signup_rate"
 }
 

@@ -3,11 +3,10 @@ import type { ScenarioData } from "./types"
 export const scenario1: ScenarioData = {
   id: 1,
   title: "The Vanishing Signups",
-  description: "Uncover the mystery behind the sudden drop in user registrations.",
+  description: "Uncover the mystery behind the sudden drop in the signup rate",
   introText: [
-    "Welcome, data detective! TechCorp is facing a crisis. Our signups have plummeted, and we need your analytical prowess to uncover the cause.",
-    "Your mission: Dive into the data, identify the pattern behind the declining signups, and report your findings. Time is of the essence!",
-    "New feature: You can now inspect the app to gain additional insights. This will add 30 seconds to your time.",
+    "Your stakeholders have noticed that the signup rate has decreased for the last few days.",
+    "Your task is to figure out why, submit your answer below!"
   ],
   successText: [
     "You successfully identified that mobile signups dropped significantly after the 8th day. This kind of insight is crucial for quickly addressing issues that affect user acquisition.",
@@ -27,5 +26,6 @@ export const scenario1: ScenarioData = {
         "Upon inspecting the app, you notice that the mobile signup process seems to have a new step that wasn't there before. This additional step might be causing friction for mobile users.",
     },
   ],
+  yAxis: "signup_rate",
 }
 

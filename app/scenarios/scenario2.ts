@@ -35,5 +35,6 @@ export const scenario2: ScenarioData = {
         "The release cycle information shows that a new update was pushed 8 days ago, which included changes to the mobile UI and social media integration.",
     },
   ],
+  yAxis: "signups",
 }
 

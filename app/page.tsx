@@ -5,6 +5,7 @@ import AnalyticsDashboard from "./components/AnalyticsDashboard"
 import SuccessScreen from "./components/SuccessScreen"
 import ScenarioSelection from "./components/ScenarioSelection"
 import GameIntro from "./components/GameIntro"
+import type { ScenarioData } from "./scenarios/types"
 
 type CompletedScenario = {
   id: number
@@ -21,7 +22,7 @@ export default function Home() {
   const [showIntro, setShowIntro] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showScenarioSelection, setShowScenarioSelection] = useState(false)
-  const [scenario, setScenario] = useState(0)
+  const [scenario, setScenario] = useState<ScenarioData | null>(null)
   const [completedScenarios, setCompletedScenarios] = useState<CompletedScenario[]>([])
   const [scenarioTimes, setScenarioTimes] = useState<ScenarioTime[]>([])
 
@@ -38,20 +39,22 @@ export default function Home() {
   }
 
   const handleSuccess = (time: number) => {
+    if (!scenario) return
     setShowSuccess(true)
+
     setCompletedScenarios((prev) => {
-      const existingIndex = prev.findIndex((s) => s.id === scenario)
+      const existingIndex = prev.findIndex((s) => s.id === scenario.id)
       if (existingIndex >= 0) {
         const newCompleted = [...prev]
-        newCompleted[existingIndex] = { id: scenario, time }
+        newCompleted[existingIndex] = { id: scenario.id, time }
         return newCompleted
       }
-      return [...prev, { id: scenario, time }]
+      return [...prev, { id: scenario.id, time }]
     })
-    // Update scenarioTimes
+
     setScenarioTimes((prev) => {
-      const newTimes = prev.filter((s) => s.id !== scenario)
-      return [...newTimes, { id: scenario, time }]
+      const newTimes = prev.filter((s) => s.id !== scenario.id)
+      return [...newTimes, { id: scenario.id, time }]
     })
   }
 
@@ -60,7 +63,7 @@ export default function Home() {
     setShowSuccess(false)
   }
 
-  const handleSelectScenario = (selectedScenario: number) => {
+  const handleSelectScenario = (selectedScenario: ScenarioData) => {
     setScenario(selectedScenario)
     setShowScenarioSelection(false)
     setShowIntro(true)
@@ -70,7 +73,7 @@ export default function Home() {
     setShowScenarioSelection(true)
     setShowIntro(false)
     setShowSuccess(false)
-    setScenario(0)
+    setScenario(null)
   }
 
   const updateScenarioTime = (id: number, time: number) => {
@@ -91,18 +94,17 @@ export default function Home() {
           <h1 className="text-4xl font-bold mb-8 text-center text-primary">Analytics Adventure</h1>
           <ScenarioSelection onSelectScenario={handleSelectScenario} completedScenarios={completedScenarios} />
         </div>
-      ) : showSuccess ? (
+      ) : showSuccess && scenario ? (
         <SuccessScreen onContinue={handleContinue} scenario={scenario} />
-      ) : (
+      ) : scenario ? (
         <AnalyticsDashboard
           onSuccess={handleSuccess}
           scenario={scenario}
           onBackToScenarios={handleBackToScenarios}
-          initialTime={scenarioTimes.find((s) => s.id === scenario)?.time || 0}
+          initialTime={scenarioTimes.find((s) => s.id === scenario.id)?.time || 0}
           updateScenarioTime={updateScenarioTime}
         />
-      )}
+      ) : null}
     </main>
   )
 }
-

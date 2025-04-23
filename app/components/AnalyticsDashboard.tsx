@@ -6,13 +6,14 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ScenarioTimer } from "./ScenarioTimer"
 import { ArrowLeft, CheckCircle, Glasses, Code, Megaphone, Search } from "lucide-react"
-import { scenarios } from "@/app/scenarios"
+// import { scenarios } from "@/app/scenarios"
 import { ChartControls } from "./cards/ChartControls"
 import { ChartCard } from "./cards/ChartCard"
 import { FindingsSubmit } from "./cards/FindingsSubmit"
 import { FiltersCard } from "./cards/FiltersCard"
 import { ExtraInfoCard } from "./cards/ExtraInfoCard"
 import ScenarioDescriptionCard from "./cards/ScenarioDescriptionCard"
+import type { ScenarioData } from "@/app/scenarios/types"
 
 type ChartType = "line" | "area"
 
@@ -31,12 +32,12 @@ export default function AnalyticsDashboard({
   updateScenarioTime,
 }: {
   onSuccess: (time: number) => void
-  scenario: number
+  scenario: ScenarioData
   onBackToScenarios: () => void
   initialTime: number
   updateScenarioTime: (id: number, time: number) => void
 }) {
-  const [yAxis, setYAxis] = useState<"visitors" | "signups" | "signup_rate">("signups")
+  const [yAxis, setYAxis] = useState<"visitors" | "signups" | "signup_rate">(scenario.yAxis as any)
   const [breakdown, setBreakdown] = useState<"none" | "device" | "browser" | "channel">("none")
   const [chartType, setChartType] = useState<ChartType>("line")
   const [findings, setFindings] = useState("")
@@ -56,7 +57,7 @@ export default function AnalyticsDashboard({
       if (isTimerRunning) {
         setTime((prevTime) => {
           const newTime = prevTime + 1
-          updateScenarioTime(scenario, newTime)
+          updateScenarioTime(scenario.id, newTime)
           return newTime
         })
       }
@@ -67,31 +68,29 @@ export default function AnalyticsDashboard({
 
   const handleSubmit = () => {
     setIsTimerRunning(false)
-    const currentScenario = scenarios[scenario - 1]
-    if (currentScenario.correctFindingsKeywords.every((keyword) => findings.toLowerCase().includes(keyword))) {
-      setFeedback(currentScenario.feedbackText.correct)
+    if (scenario.correctFindingsKeywords.every((keyword) => findings.toLowerCase().includes(keyword))) {
+      setFeedback(scenario.feedbackText.correct)
       setIsCompleted(true)
       onSuccess(time)
     } else {
-      setFeedback(currentScenario.feedbackText.incorrect)
+      setFeedback(scenario.feedbackText.incorrect)
     }
   }
 
   const addExtraTime = (seconds: number) => {
     const newTime = time + seconds
     setTime(newTime)
-    updateScenarioTime(scenario, newTime)
+    updateScenarioTime(scenario.id, newTime)
   }
 
   const getExtraInfoButtons = (): ExtraInfoButton[] => {
-    const currentScenario = scenarios[scenario - 1]
     const iconMap: { [key: string]: React.ElementType } = {
       Glasses,
       Code,
       Megaphone,
       Search,
     }
-    return currentScenario.extraInfoButtons.map((button) => ({
+    return scenario.extraInfoButtons.map((button) => ({
       icon: iconMap[button.icon],
       label: button.label,
       action: () => {
@@ -117,7 +116,7 @@ export default function AnalyticsDashboard({
         )}
       </div>
       <ScenarioDescriptionCard
-        scenario={scenario}
+        scenario={scenario.id}
       />     
       <div className="grid grid-cols-3 gap-4">
 
