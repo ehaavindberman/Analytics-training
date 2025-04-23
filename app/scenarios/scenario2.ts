@@ -34,5 +34,10 @@ export const scenario2: ScenarioData = {
     }
   ],
   yAxis: "signup_rate",
+  filters: {
+    "device": ["all", "desktop", "mobile", "tablet"],
+    "browser": ["all", "chrome", "firefox", "safari", "edge"],
+    "channel": ["all", "organic", "paid", "social", "email"],
+  },
 }
 

@@ -8,11 +8,7 @@ type ChartCardProps = {
   yAxis: "visitors" | "signups" | "signup_rate"
   breakdown: "none" | "device" | "browser" | "channel"
   chartType: "line" | "area"
-  filters: {
-    device: string
-    browser: string
-    channel: string
-  }
+  filters: { [key: string]: string }
 }
 
 export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: ChartCardProps) {

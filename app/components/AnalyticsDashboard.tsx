@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ScenarioTimer } from "./ScenarioTimer"
 import { ArrowLeft, CheckCircle, Glasses, Code, Megaphone, Search } from "lucide-react"
-// import { scenarios } from "@/app/scenarios"
 import { ChartControls } from "./cards/ChartControls"
 import { ChartCard } from "./cards/ChartCard"
 import { FindingsSubmit } from "./cards/FindingsSubmit"
@@ -43,14 +42,19 @@ export default function AnalyticsDashboard({
   const [findings, setFindings] = useState("")
   const [feedback, setFeedback] = useState("")
   const [isCompleted, setIsCompleted] = useState(false)
-  const [filters, setFilters] = useState({
-    device: "all",
-    browser: "all",
-    channel: "all",
-  })
   const [isTimerRunning, setIsTimerRunning] = useState(true)
   const [time, setTime] = useState(initialTime)
   const [extraInfo, setExtraInfo] = useState<string | null>(null)
+  const [filters, setFilters] = useState<{ [key: string]: string }>({})
+
+  useEffect(() => {
+    const initialFilters = Object.keys(scenario.filters).reduce((acc, key) => {
+      acc[key] = "all"
+      return acc
+    }, {} as { [key: string]: string })
+
+    setFilters(initialFilters)
+  }, [scenario])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -149,6 +153,7 @@ export default function AnalyticsDashboard({
           <FiltersCard 
             filters={filters} 
             setFilters={setFilters} 
+            scenario={scenario}
           />
           <ExtraInfoCard 
             buttons={getExtraInfoButtons()} 

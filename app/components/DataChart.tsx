@@ -20,11 +20,7 @@ type Props = {
   breakdown: "none" | "device" | "browser" | "channel"
   chartType: "line" | "area"
   scenario: number
-  filters: {
-    device: string;
-    browser: string;
-    channel: string;
-  }
+  filters: { [filterName: string]: string }
 }
 
 export default function DataChart({ scenario, yAxis, breakdown, filters, chartType }: Props) {
@@ -33,12 +29,13 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
   const chartData = useMemo(() => {
 
     const filteredData = data.filter((row) => {
-      return (
-        (!filters.device || filters.device === "all" || row.device === filters.device) &&
-        (!filters.browser || filters.browser === "all" || row.browser === filters.browser) &&
-        (!filters.channel || filters.channel === "all" || row.channel === filters.channel)
-      )
+      return Object.entries(filters).every(([key, value]) => {
+        const rowValue = row[key as keyof typeof row]
+        return value === "all" || rowValue === value
+      })
     })
+    
+    
 
     const dailyData = filteredData.reduce(
       (acc, curr) => {

@@ -46,6 +46,11 @@ export const scenario3: ScenarioData = {
         "The SEO team mentions that they've recently optimized several key landing pages and updated meta descriptions. They've also noticed an uptick in backlinks from high-authority domains.",
     },
   ],
-  yAxis: "signup_rate"
+  yAxis: "signup_rate",
+  filters: {
+    "device": ["all", "desktop", "mobile", "tablet"],
+    "browser": ["all", "chrome", "firefox", "safari", "edge"],
+    "channel": ["all", "organic", "paid", "social", "email"],
+  },
 }
 

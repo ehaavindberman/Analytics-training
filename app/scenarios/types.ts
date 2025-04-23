@@ -16,5 +16,7 @@ export type ScenarioData = {
     infoText: string
   }[]
   yAxis: "visitors" | "signups" | "signup_rate"
+  filters: {
+    [filterName: string]: string[]
+  }
 }
-
