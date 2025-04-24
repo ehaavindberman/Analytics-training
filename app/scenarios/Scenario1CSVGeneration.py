@@ -11,8 +11,8 @@ import seaborn as sns
 # ===== Config ===== #
 np.random.seed(10)
 filename = "../../public/scenarios/scenario1.csv"
-DAYS = 10
-START_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1) - timedelta(days=DAYS)
+dayS = 10
+START_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1) - timedelta(days=dayS)
 END_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1)
 BASE_CONVERSION = 0.05
 
@@ -42,7 +42,7 @@ def generate_minute_visitors(start, end):
         visitors = base * day_factor[weekday] * tf * (1 + sin_wave)
         count = max(0, int(visitors + np.random.normal(0, 10)))
         rows.append((minute, count))
-    return pd.DataFrame(rows, columns=["Minute", "Visitors"])
+    return pd.DataFrame(rows, columns=["minute", "visitors"])
 
 def jitter_weights(base_weights, scale=0.2):
     keys = list(base_weights.keys())
@@ -68,13 +68,13 @@ def simulate_batch_signups(minute_df):
     # Generate a random daily multiplier for each day
     daily_noise = {
         day: np.clip(np.random.normal(1.0, 0.2), 0.8, 1.2)
-        for day in pd.to_datetime(minute_df["Minute"]).dt.date.unique()
+        for day in pd.to_datetime(minute_df["minute"]).dt.date.unique()
     }
 
-    current_day =  minute_df['Minute'][0].date()
+    current_day =  minute_df['minute'][0].date()
 
     for _, row in minute_df.iterrows():
-        minute = row["Minute"]
+        minute = row["minute"]
         day = minute.date()
         
         # reset the jitter weights for each factor every day
@@ -88,7 +88,7 @@ def simulate_batch_signups(minute_df):
             browser_keys, browser_probs = zip(*browser_weights_day.items())
             channel_keys, channel_probs = zip(*channel_weights_day.items())
         
-        total = row["Visitors"]
+        total = row["visitors"]
 
         if total == 0:
             continue
@@ -125,13 +125,13 @@ def simulate_batch_signups(minute_df):
                     signups = np.random.binomial(c_count, conv_rate)
 
                     results.append({
-                        "Minute": minute,
-                        "Day": day,
-                        "Device": device,
-                        "Browser": browser,
-                        "Channel": channel,
-                        "Visitors": c_count,
-                        "Signups": signups
+                        "minute": minute,
+                        "day": day,
+                        "device": device,
+                        "browser": browser,
+                        "channel": channel,
+                        "visitors": c_count,
+                        "signups": signups
                     })
 
     return pd.DataFrame(results)
@@ -143,20 +143,20 @@ minute_data = generate_minute_visitors(START_DATE, END_DATE)
 batched_df = simulate_batch_signups(minute_data)
 
 # Daily aggregation
-daily = batched_df.groupby(["Day", "Device", "Browser", "Channel"]).agg(
-    {"Visitors": "sum", "Signups": "sum"}
+daily = batched_df.groupby(["day", "device", "browser", "channel"]).agg(
+    {"visitors": "sum", "signups": "sum"}
 ).reset_index()
 
 # daily.to_csv(filename, index=False)
 
 # Plot daily signup rate
-summary = batched_df.groupby("Day").agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-summary["Signup Rate"] = summary["Signups"] / summary["Visitors"]
+summary = batched_df.groupby("day").agg({"visitors": "sum", "signups": "sum"}).reset_index()
+summary["Signup Rate"] = summary["signups"] / summary["visitors"]
 
 plt.figure(figsize=(10, 5))
-plt.plot(summary["Day"], summary["Signup Rate"], marker='o', color='teal')
+plt.plot(summary["day"], summary["Signup Rate"], marker='o', color='teal')
 plt.title("Daily Signup Rate")
-plt.xlabel("Day")
+plt.xlabel("day")
 plt.ylabel("Signup Rate")
 plt.ylim(0, summary["Signup Rate"].max() * 1.1)
 plt.grid(True)
@@ -169,20 +169,20 @@ sns.set(style="whitegrid")
 def plot_breakdowns(df, breakdown_col, axes, row):
     unique_values = df[breakdown_col].unique()
 
-    # Plot: Visitors
+    # Plot: visitors
     for val in unique_values:
         subset = df[df[breakdown_col] == val]
-        axes[row, 0].plot(subset["Day"], subset["Visitors"], marker='o', label=val)
+        axes[row, 0].plot(subset["day"], subset["visitors"], marker='o', label=val)
     
-    axes[row, 0].set_title(f"{breakdown_col} - Visitors")
-    axes[row, 0].set_ylabel("Visitors")
+    axes[row, 0].set_title(f"{breakdown_col} - visitors")
+    axes[row, 0].set_ylabel("visitors")
     axes[row, 0].set_ylim(bottom=0)
     axes[row, 0].legend(title=breakdown_col)
     
     # Plot: Signup Rate
     for val in unique_values:
         subset = df[df[breakdown_col] == val]
-        axes[row, 1].plot(subset["Day"], subset["Signup Rate"], marker='o', label=val)
+        axes[row, 1].plot(subset["day"], subset["Signup Rate"], marker='o', label=val)
     
     axes[row, 1].set_title(f"{breakdown_col} - Signup Rate")
     axes[row, 1].set_ylabel("Signup Rate")
@@ -191,26 +191,26 @@ def plot_breakdowns(df, breakdown_col, axes, row):
 
 # Set up the figure with 3 rows and 2 columns for the breakdowns
 fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(16, 12), sharex='col')
-fig.suptitle("Visitors and Signup Rates by Breakdown", fontsize=18, y=1.02)
+fig.suptitle("visitors and Signup Rates by Breakdown", fontsize=18, y=1.02)
 
-# Prepare and plot for Device breakdown
-bkdn = batched_df.groupby(["Day", "Device"]).agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-bkdn["Signup Rate"] = bkdn["Signups"] / bkdn["Visitors"]
-plot_breakdowns(bkdn, "Device", axes, 0)
+# Prepare and plot for device breakdown
+bkdn = batched_df.groupby(["day", "device"]).agg({"visitors": "sum", "signups": "sum"}).reset_index()
+bkdn["Signup Rate"] = bkdn["signups"] / bkdn["visitors"]
+plot_breakdowns(bkdn, "device", axes, 0)
 
-# Prepare and plot for Browser breakdown
-bkdn = batched_df.groupby(["Day", "Browser"]).agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-bkdn["Signup Rate"] = bkdn["Signups"] / bkdn["Visitors"]
-plot_breakdowns(bkdn, "Browser", axes, 1)
+# Prepare and plot for browser breakdown
+bkdn = batched_df.groupby(["day", "browser"]).agg({"visitors": "sum", "signups": "sum"}).reset_index()
+bkdn["Signup Rate"] = bkdn["signups"] / bkdn["visitors"]
+plot_breakdowns(bkdn, "browser", axes, 1)
 
-# Prepare and plot for Channel breakdown
-bkdn = batched_df.groupby(["Day", "Channel"]).agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-bkdn["Signup Rate"] = bkdn["Signups"] / bkdn["Visitors"]
-plot_breakdowns(bkdn, "Channel", axes, 2)
+# Prepare and plot for channel breakdown
+bkdn = batched_df.groupby(["day", "channel"]).agg({"visitors": "sum", "signups": "sum"}).reset_index()
+bkdn["Signup Rate"] = bkdn["signups"] / bkdn["visitors"]
+plot_breakdowns(bkdn, "channel", axes, 2)
 
 # Rotate x-axis labels for better visibility
 for ax in axes[-1]:  # Only on the bottom row
-    ax.set_xlabel("Day")
+    ax.set_xlabel("day")
     for label in ax.get_xticklabels():
         label.set_rotation(45)
 

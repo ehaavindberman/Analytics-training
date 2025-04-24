@@ -12,7 +12,7 @@ import { FindingsSubmit } from "./cards/FindingsSubmit"
 import { FiltersCard } from "./cards/FiltersCard"
 import { ExtraInfoCard } from "./cards/ExtraInfoCard"
 import ScenarioDescriptionCard from "./cards/ScenarioDescriptionCard"
-import type { ScenarioData } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 type ChartType = "line" | "area"
 
@@ -31,13 +31,13 @@ export default function AnalyticsDashboard({
   updateScenarioTime,
 }: {
   onSuccess: (time: number) => void
-  scenario: ScenarioData
+  scenario: ScenarioProps
   onBackToScenarios: () => void
   initialTime: number
   updateScenarioTime: (id: number, time: number) => void
 }) {
-  const [yAxis, setYAxis] = useState<"visitors" | "signups" | "signup_rate">(scenario.yAxis as any)
-  const [breakdown, setBreakdown] = useState<"none" | "device" | "browser" | "channel">("none")
+  const [yAxis, setYAxis] = useState<string>(scenario.yAxisDefault as any)
+  const [breakdown, setBreakdown] = useState<string>("none")
   const [chartType, setChartType] = useState<ChartType>("line")
   const [findings, setFindings] = useState("")
   const [feedback, setFeedback] = useState("")
@@ -128,8 +128,10 @@ export default function AnalyticsDashboard({
           <ChartControls
             yAxis={yAxis}
             setYAxis={setYAxis}
+            yAxisOptions={scenario.yAxisOptions}
             breakdown={breakdown}
             setBreakdown={setBreakdown}
+            breakdownOptions={scenario.breakdowns}
             chartType={chartType}
             setChartType={setChartType}
           />

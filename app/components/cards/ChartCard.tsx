@@ -1,12 +1,12 @@
 import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import DataChart from "../DataChart"
-import type { ScenarioData } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 type ChartCardProps = {
-  scenario: ScenarioData
-  yAxis: "visitors" | "signups" | "signup_rate"
-  breakdown: "none" | "device" | "browser" | "channel"
+  scenario: ScenarioProps
+  yAxis: string
+  breakdown: string
   chartType: "line" | "area"
   filters: { [key: string]: string }
 }
@@ -21,7 +21,13 @@ export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: Ch
       </CardHeader>
       <CardContent>
         <div className="h-[400px] w-full">
-          <DataChart scenario={scenario.id} yAxis={yAxis} breakdown={breakdown} filters={filters} chartType={chartType} />
+          <DataChart 
+            scenario={scenario} 
+            yAxis={yAxis}
+            breakdown={breakdown} 
+            filters={filters} 
+            chartType={chartType} 
+          />
         </div>
       </CardContent>
     </Card>

@@ -1,63 +1,62 @@
 "use client"
 
 import { useEffect, useState } from "react"
-
-type DeviceType = "desktop" | "mobile" | "tablet"
-type BrowserType = "chrome" | "firefox" | "safari" | "edge"
-type ChannelType = "organic" | "paid" | "social" | "email"
-
-type VisitorData = {
-  day: string
-  device: DeviceType
-  browser: BrowserType
-  channel: ChannelType
-  visitors: number
-  signups: number
-}
+import dayjs from "dayjs"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 type Props = {
-  scenario: number
+  scenario: ScenarioProps
 }
 
-// Strictly typed CSV parser
-function parseCSV(csvText: string): VisitorData[] {
+function parseCSV(csvText: string, headers: string[], types: string[]): any[] {
   const lines = csvText.trim().split("\n")
-  const headers = lines[0].split(",")
-
+  const headerRow = lines[0].split(",")
+  
   return lines.slice(1).map((line) => {
     const values = line.split(",").map((v) => v.trim())
+    
+    const row: { [key: string]: any } = {}
+    headers.forEach((header, index) => {
+      const value = values[headerRow.indexOf(header)]
+      const type = types[index]
 
-    const row: VisitorData = {
-      day: values[headers.indexOf("Day")],
-      device: values[headers.indexOf("Device")] as DeviceType,
-      browser: values[headers.indexOf("Browser")] as BrowserType,
-      channel: values[headers.indexOf("Channel")] as ChannelType,
-      visitors: parseInt(values[headers.indexOf("Visitors")], 10),
-      signups: parseInt(values[headers.indexOf("Signups")], 10),
-    }
+      switch (type) {
+        case "number":
+          row[header] = parseFloat(value)
+          break
+        case "date":
+          row[header] = dayjs(value).format("YYYY-MM-DD")
+          break
+        case "string":
+        default:
+          row[header] = value
+      }
+    })
 
     return row
   })
 }
 
-export default function DataChartLoader({scenario}: Props) {
-  const [data, setData] = useState<VisitorData[]>([])
-  const csvUrl = `/scenarios/scenario${scenario}.csv`
+export default function DataChartLoader({ scenario }: Props) {
+  const [data, setData] = useState<any[]>([])
+  const csvUrl = `/scenarios/scenario${scenario.id}.csv`
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(csvUrl)
         const text = await response.text()
-        const parsedData = parseCSV(text)
+
+        const parsedData = parseCSV(text, scenario.headers, scenario.types)
         setData(parsedData)
+
       } catch (error) {
         console.error("Error loading data:", error)
-      } 
+      }
     }
   
     fetchData()
-  }, [csvUrl])
+  }, [csvUrl, scenario])
 
   return data
 }

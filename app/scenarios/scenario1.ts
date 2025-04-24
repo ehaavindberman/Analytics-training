@@ -1,6 +1,6 @@
-import type { ScenarioData } from "./types"
+import type { ScenarioProps } from "./types"
 
-export const scenario1: ScenarioData = {
+export const scenario1: ScenarioProps = {
   id: 1,
   title: "Warmup Challenge 1",
   description: "Uncover the mystery behind the sudden drop in the signup rate",
@@ -26,10 +26,22 @@ export const scenario1: ScenarioData = {
         "Upon inspecting the app, you notice that the mobile signup process seems to have a new step that wasn't there before. This additional step might be causing friction for mobile users.",
     },
   ],
-  yAxis: "signup_rate",
+  yAxisDefault: "signup_rate",
+  yAxisOptions: ["visitors", "signups", "signup_rate"],
+  breakdowns: ["device", "browser", "channel"],
   filters: {
     "device": ["desktop", "mobile", "tablet"],
     "browser": ["chrome", "firefox", "safari", "edge"],
     "channel": ["organic", "paid", "social", "email"],
   },
+  headers: ["day", "device", "browser", "channel", "visitors", "signups"],
+  types: ["date", "string", "string", "string", "number", "number"],
+  calculatedFields: [
+    {
+      name: "signup_rate",
+      calculate: ({ signups, visitors }) => signups / visitors,
+      dataTypes: ["number"]
+    },
+  ],
+  xAxis: "day",
 }

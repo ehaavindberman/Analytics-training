@@ -1,6 +1,6 @@
-import type { ScenarioData } from "./types"
+import type { ScenarioProps } from "./types"
 
-export const scenario2: ScenarioData = {
+export const scenario2: ScenarioProps = {
   id: 2,
   title: "Warmup challenge 2",
   description: "Investigate the peculiar changes in visitor patterns across channels.",
@@ -33,11 +33,23 @@ export const scenario2: ScenarioData = {
         "The release cycle information shows there have been some small changes with the urls for our website",
     }
   ],
-  yAxis: "signup_rate",
+  yAxisDefault: "signup_rate",
+  yAxisOptions: ["visitors", "signups", "signup_rate"],
+  breakdowns: ["device", "browser", "channel"],
   filters: {
     "device": ["all", "desktop", "mobile", "tablet"],
     "browser": ["all", "chrome", "firefox", "safari", "edge"],
     "channel": ["all", "organic", "paid", "social", "email"],
   },
+  headers: ["day", "device", "browser", "channel", "visitors", "signups"],
+  types: ["date", "string", "string", "string", "number", "number"],
+  calculatedFields: [
+    {
+      name: "signup_rate",
+      calculate: ({ signups, visitors }) => signups / visitors,
+      dataTypes: ["number"]
+    },
+  ],
+  xAxis: "day",
 }
 

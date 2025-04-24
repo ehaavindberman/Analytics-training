@@ -1,4 +1,10 @@
-export type ScenarioData = {
+type CalculatedField = {
+  name: string
+  calculate: (input: { [key: string]: number }) => number
+  dataTypes: Array<"string" | "number" | "date">
+}
+
+export type ScenarioProps = {
   id: number
   title: string
   description: string
@@ -15,8 +21,14 @@ export type ScenarioData = {
     timeAdded: number
     infoText: string
   }[]
-  yAxis: "visitors" | "signups" | "signup_rate"
+  yAxisDefault: string,
+  yAxisOptions: string[],
+  breakdowns: string[],
   filters: {
     [filterName: string]: string[]
   }
+  headers: string[]
+  types: Array<"string" | "number" | "date">
+  calculatedFields?: CalculatedField[]
+  xAxis: string
 }

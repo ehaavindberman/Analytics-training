@@ -13,70 +13,108 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts"
+import _ from "lodash"
 import DataChartLoader from "./DataChartLoader"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 type Props = {
-  yAxis: "visitors" | "signups" | "signup_rate"
-  breakdown: "none" | "device" | "browser" | "channel"
+  scenario: ScenarioProps
+  yAxis: string
+  breakdown: string
   chartType: "line" | "area"
-  scenario: number
   filters: { [filterName: string]: string }
 }
 
 export default function DataChart({ scenario, yAxis, breakdown, filters, chartType }: Props) {
+
   const data = DataChartLoader({scenario})
 
   const chartData = useMemo(() => {
 
-    const filteredData = data.filter((row) => {
-      return Object.entries(filters).every(([key, value]) => {
-        const rowValue = row[key as keyof typeof row]
-        return value === "all" || rowValue === value
+    const filteredData = _.filter(data, (row) =>
+      _.every(Object.entries(filters), ([key, value]) => {
+        const rowValue = _.get(row, key);
+        return value === "all" || rowValue == value;
       })
-    })
-    
-    
-
-    const dailyData = filteredData.reduce(
-      (acc, curr) => {
-        const date = curr.day
-        if (!acc[date]) {
-          acc[date] = { date, visitors: 0, signups: 0 }
-        }
-        acc[date].visitors += curr.visitors
-        acc[date].signups += curr.signups
-
-        if (breakdown !== "none") {
-          const breakdownValue = curr[breakdown]
-          if (!acc[date][breakdownValue]) {
-            acc[date][breakdownValue] = { visitors: 0, signups: 0 }
-          }
-          acc[date][breakdownValue].visitors += curr.visitors
-          acc[date][breakdownValue].signups += curr.signups
-        }
-
-        return acc
-      },
-      {} as Record<string, any>,
     )
 
-    return Object.values(dailyData).map((day) => ({
-      ...day,
-      signup_rate: day.signups / day.visitors,
-      ...(breakdown !== "none" &&
-        Object.fromEntries(
-          Object.entries(day)
-            .filter(([key]) => key !== "day" && key !== "visitors" && key !== "signups")
-            .map(([key, value]: [string, any]) => [key, { ...value, signup_rate: value.signups / value.visitors }]),
-        )),
-    }))
-  }, [data, breakdown, filters])
+    const allDates = _.uniq(filteredData.map((row) => row[scenario.xAxis]))
+    const allBreakdownValues = breakdown !== "none"
+      ? _.uniq(filteredData.map((row) => row[breakdown]))
+      : []
+
+    const grouped = _.groupBy(filteredData, (row) =>
+      breakdown !== "none" ? `${row[scenario.xAxis]}|${row[breakdown]}` : row[scenario.xAxis]
+    )
+
+    const aggregated: Record<string, any>[] = []
+
+    for (const date of allDates) {
+      if (breakdown === "none") {
+        const rows = grouped[date] || []
+        const result: Record<string, any> = {
+          [scenario.xAxis]: date,
+        }
+
+        for (const field of scenario.yAxisOptions) {
+          const isCalculated = scenario.calculatedFields?.some((f) => f.name === field)
+          if (!isCalculated) {
+            result[field] = _.sumBy(rows, (row) => Number(row[field] ?? 0))
+          }
+        }
+
+        for (const field of scenario.calculatedFields ?? []) {
+          try {
+            result[field.name] = field.calculate(result)
+          } catch {
+            result[field.name] = null
+          }
+        }
+
+        aggregated.push(result)
+      } else {
+        const nested: Record<string, any> = {
+          [scenario.xAxis]: date,
+        }
+
+        for (const value of allBreakdownValues) {
+          const key = `${date}|${value}`
+          const rows = grouped[key] || []
+
+          const breakdownGroup: Record<string, any> = {
+            [breakdown]: value,
+          }
+
+          for (const field of scenario.yAxisOptions) {
+            const isCalculated = scenario.calculatedFields?.some((f) => f.name === field)
+            if (!isCalculated) {
+              breakdownGroup[field] = _.sumBy(rows, (row) => Number(row[field] ?? 0))
+            }
+          }
+
+          for (const field of scenario.calculatedFields ?? []) {
+            try {
+              breakdownGroup[field.name] = field.calculate(breakdownGroup)
+            } catch {
+              breakdownGroup[field.name] = null
+            }
+          }
+
+          nested[value] = breakdownGroup
+        }
+
+        aggregated.push(nested)
+      }
+    }
+
+    return aggregated
+  }, [data, breakdown, filters, scenario])
 
   const breakdownValues = useMemo(() => {
     if (breakdown === "none") return []
     return Array.from(new Set(data.map((d) => d[breakdown])))
   }, [data, breakdown])
-
+  
   const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#0088FE"]
 
   const renderChart = () => {

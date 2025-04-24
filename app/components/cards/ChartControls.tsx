@@ -4,15 +4,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 
 type ChartControlsProps = {
-  yAxis: "visitors" | "signups" | "signup_rate"
-  setYAxis: (value: "visitors" | "signups" | "signup_rate") => void
-  breakdown: "none" | "device" | "browser" | "channel"
-  setBreakdown: (value: "none" | "device" | "browser" | "channel") => void
+  yAxis: string
+  setYAxis: (value: string) => void
+  breakdown: string
+  setBreakdown: (value: string) => void
   chartType: "line" | "area"
   setChartType: (value: "line" | "area") => void
+  yAxisOptions: string[]
+  breakdownOptions: string[]
 }
 
-export function ChartControls({ yAxis, setYAxis, breakdown, setBreakdown, chartType, setChartType }: ChartControlsProps) {
+export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBreakdown, chartType, setChartType }: ChartControlsProps) {
   return (
     <Card>
       <CardHeader>
@@ -22,14 +24,14 @@ export function ChartControls({ yAxis, setYAxis, breakdown, setBreakdown, chartT
         <div className="grid grid-cols-3 gap-4">
           <div>
             <Label htmlFor="y-axis" className="mb-2 block">Y-Axis</Label>
-            <Select value={yAxis} onValueChange={(value) => setYAxis(value as any)}>
+            <Select value={yAxis} onValueChange={(value) => setYAxis(value)}>
               <SelectTrigger id="y-axis" className="w-full">
-                <SelectValue placeholder="Signups" />
+                <SelectValue placeholder="Select..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="visitors">Visitors</SelectItem>
-                <SelectItem value="signups">Signups</SelectItem>
-                <SelectItem value="signup_rate">Signup Rate</SelectItem>
+                {yAxisOptions.map((option) => (
+                  <SelectItem key={option} value={option}>{option.replace("_", " ")}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

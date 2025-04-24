@@ -2,14 +2,14 @@ import React from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import type { ScenarioData } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 type Filters = { [key: string]: string }
 
 type FiltersCardProps = {
   filters: Filters
   setFilters: (filters: Filters) => void
-  scenario: ScenarioData
+  scenario: ScenarioProps
 }
 
 export function FiltersCard({ filters, setFilters, scenario }: FiltersCardProps) {
