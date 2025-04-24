@@ -28,6 +28,11 @@ export const scenario1: ScenarioProps = {
   ],
   yAxisDefault: "signup_rate",
   yAxisOptions: ["visitors", "signups", "signup_rate"],
+  yAxisFormats: {
+    "visitors": "number",
+    "signups": "number",
+    "signup_rate": "pct",
+  },
   breakdowns: ["device", "browser", "channel"],
   filters: {
     "device": ["desktop", "mobile", "tablet"],
@@ -40,7 +45,8 @@ export const scenario1: ScenarioProps = {
     {
       name: "signup_rate",
       calculate: ({ signups, visitors }) => signups / visitors,
-      dataTypes: ["number"]
+      dataTypes: ["number"],
+      format: "pct",
     },
   ],
   xAxis: "day",

@@ -2,7 +2,10 @@ type CalculatedField = {
   name: string
   calculate: (input: { [key: string]: number }) => number
   dataTypes: Array<"string" | "number" | "date">
+  format: string
 }
+
+type YAxisFormat = "number" | "pct" | "currency"
 
 export type ScenarioProps = {
   id: number
@@ -23,6 +26,7 @@ export type ScenarioProps = {
   }[]
   yAxisDefault: string,
   yAxisOptions: string[],
+  yAxisFormats: Record<string, YAxisFormat>
   breakdowns: string[],
   filters: {
     [filterName: string]: string[]

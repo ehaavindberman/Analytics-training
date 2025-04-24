@@ -25,6 +25,26 @@ type Props = {
   filters: { [filterName: string]: string }
 }
 
+function formatValue(value: number, format: string): string {
+  if (format == "pct") {
+    return `${(value * 100).toFixed(2)}%`
+  }
+
+  if (format == "dollar") {
+    return `$${value.toFixed(2)}`
+  }
+
+  if (format == "millions") {
+    return `${(value / 1_000_000).toFixed(1)}M`
+  }
+
+  if (format == "thousands") {
+    return `${(value / 1000).toFixed(1)}k`
+  }
+
+  return value.toLocaleString()
+}
+
 export default function DataChart({ scenario, yAxis, breakdown, filters, chartType }: Props) {
 
   const data = DataChartLoader({scenario})
@@ -126,8 +146,8 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
         <ChartComponent data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="day" />
-          <YAxis />
-          <Tooltip />
+          <YAxis tickFormatter={(value) => formatValue(value, scenario.yAxisFormats[yAxis])}/>
+          <Tooltip formatter={(value: any) => formatValue(value, scenario.yAxisFormats[yAxis])} />
           <Legend />
           {breakdown === "none" ? (
             <DataComponent
