@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import type { ScenarioData } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 type Props = {
   onContinue: () => void
-  scenario: ScenarioData
+  scenario: ScenarioProps
 }
 
 export default function SuccessScreen({ onContinue, scenario }: Props) {

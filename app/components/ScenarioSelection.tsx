@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Clock, Share2, Lock } from "lucide-react"
 import { scenarios } from "@/app/scenarios"
-import type { ScenarioData } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/scenarios/types"
 
 
 type CompletedScenario = {
@@ -13,7 +13,7 @@ type CompletedScenario = {
 }
 
 type Props = {
-  onSelectScenario: (scenario: ScenarioData) => void
+  onSelectScenario: (scenario: ScenarioProps) => void
   completedScenarios: CompletedScenario[]
 }
 
