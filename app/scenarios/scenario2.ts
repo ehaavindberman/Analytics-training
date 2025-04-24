@@ -42,9 +42,9 @@ export const scenario2: ScenarioProps = {
     "signup_rate": "pct",
   },
   filters: {
-    "device": ["all", "desktop", "mobile", "tablet"],
-    "browser": ["all", "chrome", "firefox", "safari", "edge"],
-    "channel": ["all", "organic", "paid", "social", "email"],
+    "device": ["desktop", "mobile", "tablet"],
+    "browser": ["chrome", "firefox", "safari", "edge"],
+    "channel": ["organic", "paid", "social", "email"],
   },
   headers: ["day", "device", "browser", "channel", "visitors", "signups"],
   types: ["date", "string", "string", "string", "number", "number"],
