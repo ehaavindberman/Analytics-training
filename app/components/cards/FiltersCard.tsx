@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import type { ScenarioProps } from "@/app/scenarios/types"
+import { formatLabel } from "@/utils/format"
 
 type Filters = { [key: string]: string }
 
@@ -27,7 +28,7 @@ export function FiltersCard({ filters, setFilters, scenario }: FiltersCardProps)
           {Object.entries(scenario.filters).map(([key, options]) => (
             <div key={key}>
               <Label htmlFor={key} className="mb-2 block">
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {formatLabel(key)}
               </Label>
               <Select value={filters[key] || "all"} onValueChange={(value) => updateFilter(key, value)}>
                 <SelectTrigger id={key} className="w-full">
@@ -37,7 +38,7 @@ export function FiltersCard({ filters, setFilters, scenario }: FiltersCardProps)
                   <SelectItem value="all">All</SelectItem>
                   {options.map((option) => (
                     <SelectItem key={option} value={option}>
-                      {option.charAt(0).toUpperCase() + option.slice(1)}
+                      {formatLabel(option)}
                     </SelectItem>
                   ))}
                 </SelectContent>

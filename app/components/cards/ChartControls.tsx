@@ -2,6 +2,7 @@ import React from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
+import { formatLabel } from "@/utils/format"
 
 type ChartControlsProps = {
   yAxis: string
@@ -14,7 +15,7 @@ type ChartControlsProps = {
   breakdownOptions: string[]
 }
 
-export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBreakdown, chartType, setChartType }: ChartControlsProps) {
+export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBreakdown, breakdownOptions, chartType, setChartType }: ChartControlsProps) {
   return (
     <Card>
       <CardHeader>
@@ -30,7 +31,7 @@ export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBre
               </SelectTrigger>
               <SelectContent>
                 {yAxisOptions.map((option) => (
-                  <SelectItem key={option} value={option}>{option.replace("_", " ")}</SelectItem>
+                  <SelectItem key={option} value={option}>{formatLabel(option)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -44,9 +45,9 @@ export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBre
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="none">None</SelectItem>
-                <SelectItem value="device">Device</SelectItem>
-                <SelectItem value="browser">Browser</SelectItem>
-                <SelectItem value="channel">Channel</SelectItem>
+                {breakdownOptions.map((option) => (
+                  <SelectItem key={option} value={option}>{formatLabel(option)}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

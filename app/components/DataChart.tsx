@@ -16,6 +16,7 @@ import {
 import _ from "lodash"
 import DataChartLoader from "./DataChartLoader"
 import type { ScenarioProps } from "@/app/scenarios/types"
+import { formatValue, formatLabel } from "@/utils/format"
 
 type Props = {
   scenario: ScenarioProps
@@ -126,8 +127,8 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
         <ChartComponent data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="day" />
-          <YAxis tickFormatter={(value) => FormatValue(value, scenario.yAxisFormats[yAxis])}/>
-          <Tooltip formatter={(value: any) => FormatValue(value, scenario.yAxisFormats[yAxis])} />
+          <YAxis tickFormatter={(value) => formatValue(value, scenario.yAxisFormats[yAxis])}/>
+          <Tooltip formatter={(value: any) => formatValue(value, scenario.yAxisFormats[yAxis])} />
           <Legend />
           {breakdown === "none" ? (
             <DataComponent
@@ -135,7 +136,7 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
               dataKey={yAxis}
               stroke={colors[0]}
               fill={chartType === "area" ? colors[0] : undefined}
-              name={yAxis.charAt(0).toUpperCase() + yAxis.slice(1).replace("_", " ")}
+              name={formatLabel(yAxis)}
             />
           ) : (
             breakdownValues.map((value, index) => (
