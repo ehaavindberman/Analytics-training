@@ -13,6 +13,7 @@ import { FiltersCard } from "./cards/FiltersCard"
 import { ExtraInfoCard } from "./cards/ExtraInfoCard"
 import ScenarioDescriptionCard from "./cards/ScenarioDescriptionCard"
 import type { ScenarioProps } from "@/app/scenarios/types"
+import { testUserAnswer } from "./TestUserAnswer"
 
 type ChartType = "line" | "area"
 
@@ -70,14 +71,18 @@ export default function AnalyticsDashboard({
     return () => clearInterval(interval)
   }, [isTimerRunning, scenario, updateScenarioTime])
 
-  const handleSubmit = () => {
-    setIsTimerRunning(false)
-    if (scenario.correctFindingsKeywords.every((keyword) => findings.toLowerCase().includes(keyword))) {
-      setFeedback(scenario.feedbackText.correct)
-      setIsCompleted(true)
-      onSuccess(time)
+  const handleSubmit = async () => {
+    setIsTimerRunning(false);
+  
+    // 🧠 New embedding-based check
+    const isCorrect = await testUserAnswer(findings, 0.8, scenario.embeddingFile);
+  
+    if (isCorrect) {
+      setFeedback(scenario.feedbackText.correct);
+      setIsCompleted(true);
+      onSuccess(time);
     } else {
-      setFeedback(scenario.feedbackText.incorrect)
+      setFeedback(scenario.feedbackText.incorrect);
     }
   }
 

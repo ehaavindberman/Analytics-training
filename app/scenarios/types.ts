@@ -35,4 +35,6 @@ export type ScenarioProps = {
   types: Array<"string" | "number" | "date">
   calculatedFields?: CalculatedField[]
   xAxis: string
+  correctAnswers: string[]
+  embeddingFile: string
 }
