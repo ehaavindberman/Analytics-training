@@ -13,7 +13,6 @@ export type ScenarioProps = {
   description: string
   introText: string[]
   successText: string[]
-  correctFindingsKeywords: string[]
   feedbackText: {
     correct: string
     incorrect: string

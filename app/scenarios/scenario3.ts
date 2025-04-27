@@ -11,7 +11,6 @@ export const scenario3: ScenarioProps = {
   successText: [
     "Great work noticing the organic visits have increased, but these new visitors aren't signing up, leading to overall lower signup rates but not impacting signups overall.",
   ],
-  correctFindingsKeywords: ["organic", "spike", "signup rate"],
   feedbackText: {
     correct: "Correct!",
     incorrect: "Not quite. Try again.",

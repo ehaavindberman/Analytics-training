@@ -12,7 +12,6 @@ export const scenario1: ScenarioProps = {
     "Great work, you noticed that mobile signups dropped to none impacting the overall signup rate.",
     "We'll get the devs on it, sounds like a recent addition to the mobile signup flow is stopping users from actually signing up!",
   ],
-  correctFindingsKeywords: ["mobile", "signup"],
   feedbackText: {
     correct: "Correct!",
     incorrect: "Not quite. Try again.",
