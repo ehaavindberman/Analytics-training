@@ -1,6 +1,6 @@
 type CalculatedField = {
   name: string
-  calculate: (input: { [key: string]: number }) => number
+  calculate: (input: { [key: string]: any }) => number
   dataTypes: Array<"string" | "number" | "date">
   format: string
 }
@@ -10,7 +10,6 @@ type YAxisFormat = "number" | "pct" | "currency"
 export type ScenarioProps = {
   id: number
   title: string
-  description: string
   introText: string[]
   successText: string[]
   feedbackText: {

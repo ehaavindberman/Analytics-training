@@ -3,7 +3,6 @@ import type { ScenarioProps } from "./types"
 export const scenario1: ScenarioProps = {
   id: 1,
   title: "Warmup Challenge 1",
-  description: "Uncover the mystery behind the sudden drop in the signup rate",
   introText: [
     "Your CEO noticed that the signup rate has decreased for the last few days!",
     "Your task is to figure out why. Submit your answer below."
