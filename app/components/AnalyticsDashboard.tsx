@@ -73,9 +73,8 @@ export default function AnalyticsDashboard({
 
   const handleSubmit = async () => {
     setIsTimerRunning(false);
-  
-    // 🧠 New embedding-based check
-    const isCorrect = await testUserAnswer(findings, 0.8, scenario.embeddingFile);
+
+    const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile);
   
     if (isCorrect) {
       setFeedback(scenario.feedbackText.correct);

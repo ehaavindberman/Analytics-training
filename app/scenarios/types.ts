@@ -24,10 +24,10 @@ export type ScenarioProps = {
     timeAdded: number
     infoText: string
   }[]
-  yAxisDefault: string,
-  yAxisOptions: string[],
+  yAxisDefault: string
+  yAxisOptions: string[]
   yAxisFormats: Record<string, YAxisFormat>
-  breakdowns: string[],
+  breakdowns: string[]
   filters: {
     [filterName: string]: string[]
   }
@@ -37,4 +37,5 @@ export type ScenarioProps = {
   xAxis: string
   correctAnswers: string[]
   embeddingFile: string
+  threshold: number
 }

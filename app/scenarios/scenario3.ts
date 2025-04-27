@@ -92,5 +92,6 @@ export const scenario3: ScenarioProps = {
     "The signup rate decline isn't from a drop in signups, but from an increase in visitors (mostly from organic traffic) who aren't signing up.",
   ],
   embeddingFile: "/scenarios/scenario3-embeddings.json",
+  threshold: 0.8,
 }
 

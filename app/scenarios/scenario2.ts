@@ -80,5 +80,6 @@ export const scenario2: ScenarioProps = {
     "Most other traffic sources remain stable, but social traffic has fallen substantially. Since social users typically sign up at a high rate, the reduced volume directly caused the decrease in total signups.",
   ],
   embeddingFile: "/scenarios/scenario2-embeddings.json",
+  threshold: 0.8,
 }
 

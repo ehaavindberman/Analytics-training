@@ -76,4 +76,5 @@ export const scenario1: ScenarioProps = {
     "Mobile signups are zero two days ago",
   ],
   embeddingFile: "/scenarios/scenario1-embeddings.json",
+  threshold: 0.8,
 }
