@@ -66,12 +66,25 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
+@layer utilities {
+  .bg-graph-paper {
+    background-color: rgb(222, 222, 222);
+    background-image:
+      linear-gradient(to right, rgba(12, 11, 44, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }
 
+@layer utilities {
+  .hand-drawn-border {
+    border: 2px solid black;
+  }
+
+  .hand-drawn-font {
+    font-family: "Caveat";
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+}

@@ -8,7 +8,7 @@
 
 export const scenario5: ScenarioProps = {
   id: 5,
-  title: "Sweater Weather",
+  title: "Notflix",
   introText: [
     "Welcome to Notflix, we sell subscriptions and have noticed that recently our retention rates have been on a downward trend.",
     "Please investigate and let us know what is going on!",

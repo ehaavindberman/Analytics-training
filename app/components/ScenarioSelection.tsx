@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Clock, Share2, Lock } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Clock, Share2 } from "lucide-react"
 import { scenarios } from "@/app/scenarios"
 import type { ScenarioProps } from "@/app/scenarios/types"
 
@@ -44,54 +44,58 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex flex-col items-center divide-y divide-muted gap-y-12 min-h-screen p-4 hand-drawn-font">
       {scenarios.map((scenario, index) => {
         const completedScenario = completedScenarios.find((s) => s.id === scenario.id)
         const isLocked = index > 0 && !completedScenarios.find((s) => s.id === scenario.id - 1)
-
+  
         return (
           <Card
             key={scenario.id}
-            className={`overflow-hidden transition-all duration-300 ${isLocked ? "opacity-50" : "hover:shadow-lg"}`}
+            className={`w-full max-w-sm min-h-[166px] ${
+              isLocked ? "opacity-50" : "hover:shadow-lg"
+            }`}
           >
-            <CardHeader className="bg-gradient-to-r from-primary to-accent pb-8">
-              <CardTitle className="flex justify-between items-center text-primary-foreground">
-                <span>
-                  Scenario {scenario.id}: {scenario.title}
-                </span>
-                {completedScenario ? (
-                  <CheckCircle className="text-accent" />
-                ) : isLocked ? (
-                  <Lock className="text-muted" />
-                ) : null}
+            <CardHeader className="pb-0">
+              <CardTitle className="text-green-700 text-3xl font-handwritten">
+                {scenario.title}
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-8">
-              <CardDescription className="mb-4">{scenario.description}</CardDescription>
-              <div className="flex flex-col space-y-2">
-                <Button
-                  onClick={() => onSelectScenario(scenario)}
-                  disabled={isLocked}
-                  className={completedScenario ? "bg-accent hover:bg-accent/90 text-accent-foreground" : ""}
-                >
-                  {isLocked ? "Locked" : completedScenario ? "Replay Challenge" : "Start Challenge"}
-                </Button>
-                {completedScenario && (
-                  <>
-                    <div className="flex items-center justify-center text-sm text-muted-foreground">
+  
+            <CardContent className="pt-0">
+              <div className="flex justify-between items-end mt-2">
+                {/* Left side: stats */}
+                {completedScenario ? (
+                  <div className="text-m text-muted-foreground flex flex-col space-y-2">
+                    <div className="flex items-center">
                       <Clock className="mr-1 h-4 w-4" />
                       Best Time: {formatTime(completedScenario.time)}
                     </div>
                     <Button
                       variant="outline"
-                      className="w-full"
+                      className="text-sm"
                       onClick={() => handleShare(scenario.id, completedScenario.time)}
                     >
-                      <Share2 className="mr-2 h-4 w-4" />
-                      Share Achievement
+                      <Share2 className="mr-1 h-4 w-4" />
+                      Share
                     </Button>
-                  </>
+                  </div>
+                ) : ( 
+                  // keeping this with invisible so all cards keep the same height (I know it is sketchy...)
+                  <div className="invisible text-m text-muted-foreground flex flex-col space-y-2">
+                    <div className="flex items-center"><Clock className="mr-1 h-4 w-4" />Best Time:</div>
+                    <Button variant="outline" className="text-sm"><Share2 className="mr-1 h-4 w-4" />Share</Button>
+                  </div>
                 )}
+  
+                {/* Right side: Start or Replay button */}
+                <Button
+                  onClick={() => onSelectScenario(scenario)}
+                  disabled={isLocked}
+                  className={`self-end ${completedScenario ? "bg-accent hover:bg-accent/90 text-accent-foreground" : ""}`}
+                >
+                  {isLocked ? "Locked" : completedScenario ? "Replay" : "Start"}
+                </Button>
               </div>
             </CardContent>
           </Card>
