@@ -2,7 +2,7 @@ import type { ScenarioProps } from "../components/types"
 
 export const scenario3: ScenarioProps = {
   id: 3,
-  title: "Warmup challenge 3",
+  title: "Signup rate drop!",
   introText: [
     "The CMO was poking around in our dashbaords and noticed that the last few days we've had a decrease in signup rates!",
     "Let's get this resolved quickly for them. Submit your answer below.",
