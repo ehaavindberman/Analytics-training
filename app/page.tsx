@@ -92,7 +92,7 @@ export default function Home() {
           <GameIntro onStart={handleStartGame} />
         ) : showScenarioSelection ? (
           <div className="container mx-auto p-4 max-w-6xl">
-            <h1 className="text-4xl font-bold mb-8 text-center text-primary">Analytics Adventure</h1>
+            <h1 className="text-4xl font-bold mb-8 text-center text-primary">🔥 FyreDrill 🔥</h1>
             <ScenarioSelection onSelectScenario={handleSelectScenario} completedScenarios={completedScenarios} />
           </div>
         ) : showSuccess && scenario ? (

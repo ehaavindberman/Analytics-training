@@ -11,7 +11,7 @@ export function formatValue(value: number, format: string): string {
         return `${(value * 100).toFixed(2)}%`
     }
 
-    if (format == "dollar") {
+    if (format == "currency") {
         return `$${value.toFixed(2)}`
     }
 

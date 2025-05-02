@@ -2,6 +2,7 @@ import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import DataChart from "../DataChart"
 import type { ScenarioProps } from "@/app/components/types"
+import { formatLabel } from "@/utils/format"
 
 type ChartCardProps = {
   scenario: ScenarioProps
@@ -16,8 +17,7 @@ export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: Ch
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Data Visualization - Scenario {scenario.id}</CardTitle>
-        <CardDescription>{scenario.description}</CardDescription>
+        <CardTitle className="text-3xl">{formatLabel(yAxis)} per {formatLabel(scenario.xAxis)} {breakdown !== "none" && ` by ${formatLabel(breakdown)}`}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[400px] w-full">

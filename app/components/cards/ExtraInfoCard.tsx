@@ -27,8 +27,8 @@ export function ExtraInfoCard({ buttons, isCompleted }: ExtraInfoCardProps) {
   return (
     <Card className="w-full border-none shadow-none bg-inherit min-h-[380px]">
       <CardHeader>
-        <CardTitle>Extra Information</CardTitle>
-        <CardDescription>Get additional insights at a time cost</CardDescription>
+        <CardTitle className="text-3xl">Extra Information</CardTitle>
+        <CardDescription className="text-xl">Get additional insights at a time cost</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -39,14 +39,14 @@ export function ExtraInfoCard({ buttons, isCompleted }: ExtraInfoCardProps) {
               <Button
                 key={index}
                 onClick={() => handleClick(index, button.action)}
-                className={`w-full justify-start ${
+                className={`w-full justify-start text-xl ${
                   clickedIndexes.includes(index) ? "opacity-50 pointer-events-none" : ""
                 }`}
                 disabled={isCompleted}
               >
                 <button.icon className="mr-2 h-4 w-4" />
                 {button.label}
-                <span className="ml-auto text-xs">+{button.timeAdded}s</span>
+                <span className="ml-auto text-xl">+{button.timeAdded}s</span>
               </Button>
             ))}
 
@@ -62,8 +62,8 @@ export function ExtraInfoCard({ buttons, isCompleted }: ExtraInfoCardProps) {
           <div className="w-full lg:w-3/4 space-y-4">
             {clickedIndexes.map((index) => (
               <div key={index}>
-                <h4 className="font-semibold">{buttons[index].label}</h4>
-                <p className="text-sm text-gray-700">{buttons[index].infoText}</p>
+                <h4 className="text-xl font-semibold">{buttons[index].label}</h4>
+                <p className="text-lg text-gray-700">{buttons[index].infoText}</p>
               </div>
             ))}
           </div>

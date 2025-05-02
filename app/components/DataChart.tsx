@@ -153,7 +153,7 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
                 dataKey={`${value}.${yAxis}`}
                 stroke={colors[index % colors.length]}
                 fill={chartType === "area" ? colors[index % colors.length] : undefined}
-                name={`${value} ${yAxis}`}
+                name={formatLabel(`${value} ${yAxis}`)}
                 stackId={chartType === "area" ? "1" : undefined}
               />
             ))

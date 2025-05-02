@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { ScenarioTimer } from "./ScenarioTimer"
+import { ScenarioTimer } from "./cards/ScenarioTimer"
 import { ArrowLeft, CheckCircle, Glasses, Code, Megaphone, Search } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { ChartControls } from "./cards/ChartControls"
@@ -107,10 +107,14 @@ export default function AnalyticsDashboard({
   
 
   return (
-    <div className="space-y-4 ">
+    <div className="space-y-4 hand-drawn-font">
       <Card className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <Button variant="outline" onClick={onBackToScenarios}>
+          <Button 
+            variant="outline" 
+            onClick={onBackToScenarios}
+            className="text-lg"
+          >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Scenarios
           </Button>
           <ScenarioTimer time={time} isRunning={isTimerRunning} />
@@ -129,7 +133,7 @@ export default function AnalyticsDashboard({
       <div className="relative rounded-t-lg shadow-md space-y-10">
         {/* Someday this can be tabs for multiple charts for multiple data sources */}
         <div className="absolute -top-7 bg-[#7D934B] text-white px-4 py-1 rounded-t-md text-sm font-medium">
-          Line Charts 
+          Charts 
         </div>
 
         {/* Content */}
