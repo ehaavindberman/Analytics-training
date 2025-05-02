@@ -13,11 +13,8 @@ export default function GameIntro({ onStart }: Props) {
         <h1 className="text-5xl font-bold text-primary mb-4">🔥 FyreDrill 🔥</h1>
         <div className="hand-drawn-font">
           <p className="text-3xl mb-8">
-            Welcome recruit to FyreDrill, the ultimate tool to hone your analytical thinking and quickly put out data fires.
+            Hone your analytical thinking and quickly put out data fires
           </p>
-          <div className="space-y-4">
-            <p className="text-lg">Are you ready to dive into the inferno?</p>
-          </div>
           <Button
             onClick={onStart}
             size="lg"
