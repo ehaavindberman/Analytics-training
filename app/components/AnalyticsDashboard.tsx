@@ -57,12 +57,16 @@ export default function AnalyticsDashboard({
       if (isTimerRunning) {
         setTime((prevTime) => {
           const newTime = prevTime + 1
-          updateScenarioTime(scenario.id, newTime)
+  
+          requestAnimationFrame(() => {
+            updateScenarioTime(scenario.id, newTime)
+          })
+  
           return newTime
         })
       }
     }, 1000)
-
+  
     return () => clearInterval(interval)
   }, [isTimerRunning, scenario, updateScenarioTime])
 
