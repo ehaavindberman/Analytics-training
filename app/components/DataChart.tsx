@@ -31,14 +31,12 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
   const data = DataChartLoader({scenario})
   const chartData = useMemo(() => {
     
-    // console.log("imported data: ", data)
     const filteredData = _.filter(data, (row) =>
       _.every(Object.entries(filters), ([key, value]) => {
         const rowValue = _.get(row, key);
         return value === "all" || rowValue == value;
       })
     )
-    // console.log("filtered data: ", filteredData)
 
     const allDates = _.uniq(filteredData.map((row) => row[scenario.xAxis]))
     const allBreakdownValues = breakdown !== "none"
@@ -48,10 +46,8 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
     const grouped = _.groupBy(filteredData, (row) =>
       breakdown !== "none" ? `${row[scenario.xAxis]}|${row[breakdown]}` : row[scenario.xAxis]
     )
-    // console.log("grouped data: ", grouped)
 
     const aggregated: Record<string, any>[] = []
-    let a = 1
     for (const date of allDates) {
       if (breakdown === "none") {
         const rows = grouped[date] || []
@@ -71,11 +67,6 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
             result[field.name] = field.calculate(result)
           } catch {
             result[field.name] = null
-          }
-          if (a == 1) {
-            console.log("field ",field)
-            console.log("result ", result[field.name])
-            a = 2
           }
         }
 
@@ -114,7 +105,7 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
         aggregated.push(nested)
       }
     }
-    console.log("aggregated data, ", aggregated)
+    
     return aggregated
   }, [data, breakdown, filters, scenario])
 

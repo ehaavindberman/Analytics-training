@@ -31,6 +31,5 @@ export async function testUserAnswer(
   const bestScore = Math.max(...similarities)
   const isCorrect = bestScore >= threshold
 
-  console.log("✅ Test Result:", { isCorrect, bestScore })
   return isCorrect
 }
