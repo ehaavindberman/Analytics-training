@@ -5,6 +5,7 @@ import AnalyticsDashboard from "./components/AnalyticsDashboard"
 import SuccessScreen from "./components/SuccessScreen"
 import ScenarioSelection from "./components/ScenarioSelection"
 import GameIntro from "./components/GameIntro"
+import AboutPage from "./components/AboutPage"
 import type { ScenarioProps } from "./components/types"
 
 type CompletedScenario = {
@@ -22,6 +23,7 @@ export default function Home() {
   const [showIntro, setShowIntro] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showScenarioSelection, setShowScenarioSelection] = useState(false)
+  const [showAboutPage, setShowAboutPage] = useState(false)
   const [scenario, setScenario] = useState<ScenarioProps | null>(null)
   const [completedScenarios, setCompletedScenarios] = useState<CompletedScenario[]>([])
   const [scenarioTimes, setScenarioTimes] = useState<ScenarioTime[]>([])
@@ -87,13 +89,34 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-accent">
-      <div className="min-h-screen bg-graph-paper p-4">
+      <div className="min-h-screen bg-graph-paper p-4 relative">
         {showGameIntro ? (
           <GameIntro onStart={handleStartGame} />
+        ) : showAboutPage ? (
+          <>
+            <div className="container mx-auto p-4 max-w-3xl">
+              <AboutPage />
+            </div>
+            <button
+              onClick={() => setShowAboutPage(false)}
+              className="fixed bottom-4 right-4 bg-muted text-muted-foreground px-4 py-2 rounded shadow hover:bg-muted/80"
+            >
+              ← Back
+            </button>
+          </>
         ) : showScenarioSelection ? (
           <div className="container mx-auto p-4 max-w-6xl">
             <h1 className="text-4xl font-bold mb-8 text-center text-primary">🔥 FyreDrill 🔥</h1>
-            <ScenarioSelection onSelectScenario={handleSelectScenario} completedScenarios={completedScenarios} />
+            <ScenarioSelection
+              onSelectScenario={handleSelectScenario}
+              completedScenarios={completedScenarios}
+            />
+            <button
+              onClick={() => setShowAboutPage(true)}
+              className="fixed bottom-4 right-4 bg-muted text-muted-foreground px-4 py-2 rounded shadow hover:bg-muted/80"
+            >
+              About
+            </button>
           </div>
         ) : showSuccess && scenario ? (
           <SuccessScreen onContinue={handleContinue} scenario={scenario} />
