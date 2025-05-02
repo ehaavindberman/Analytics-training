@@ -57,7 +57,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
             }`}
           >
             <CardHeader className="pb-0">
-              <CardTitle className="text-green-700 text-3xl font-handwritten">
+              <CardTitle className="text-3xl font-handwritten">
                 {scenario.title}
               </CardTitle>
             </CardHeader>
