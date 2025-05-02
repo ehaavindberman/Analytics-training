@@ -4,7 +4,7 @@
 // so the signups we get are slowly moving towards paid above the others. The paid users have a lower retention rate 
 // overall and because they are a higher share, this means the overall retention rate is lower.
 
- import type { ScenarioProps } from "./types"
+ import type { ScenarioProps } from "../components/types"
 
 export const scenario5: ScenarioProps = {
   id: 5,

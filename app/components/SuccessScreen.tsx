@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import type { ScenarioProps } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/components/types"
 
 type Props = {
   onContinue: () => void

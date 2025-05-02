@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import type { ScenarioProps } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/components/types"
 
 type Props = {
   scenario: ScenarioProps

@@ -1,4 +1,4 @@
-import type { ScenarioProps } from "./types"
+import type { ScenarioProps } from "../components/types"
 
 export const scenario3: ScenarioProps = {
   id: 3,

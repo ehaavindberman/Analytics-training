@@ -37,3 +37,11 @@ export type ScenarioProps = {
   embeddingFile: string
   threshold: number
 }
+
+export type ExtraInfoButton = {
+  icon: React.ElementType
+  label: string
+  action: () => void
+  timeAdded: number
+  infoText: string
+}

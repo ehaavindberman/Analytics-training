@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import DataChart from "../DataChart"
-import type { ScenarioProps } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/components/types"
 
 type ChartCardProps = {
   scenario: ScenarioProps

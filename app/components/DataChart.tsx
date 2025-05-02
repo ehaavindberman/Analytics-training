@@ -15,7 +15,7 @@ import {
 } from "recharts"
 import _ from "lodash"
 import DataChartLoader from "./DataChartLoader"
-import type { ScenarioProps } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/components/types"
 import { formatValue, formatLabel } from "@/utils/format"
 
 type Props = {

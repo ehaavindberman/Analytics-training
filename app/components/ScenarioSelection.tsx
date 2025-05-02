@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Clock, Share2 } from "lucide-react"
 import { scenarios } from "@/app/scenarios"
-import type { ScenarioProps } from "@/app/scenarios/types"
+import type { ScenarioProps } from "@/app/components/types"
 
 
 type CompletedScenario = {

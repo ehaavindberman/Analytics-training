@@ -5,7 +5,7 @@ import AnalyticsDashboard from "./components/AnalyticsDashboard"
 import SuccessScreen from "./components/SuccessScreen"
 import ScenarioSelection from "./components/ScenarioSelection"
 import GameIntro from "./components/GameIntro"
-import type { ScenarioProps } from "./scenarios/types"
+import type { ScenarioProps } from "./components/types"
 
 type CompletedScenario = {
   id: number

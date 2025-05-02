@@ -13,11 +13,7 @@ type FindingsFormProps = {
 
 export function FindingsSubmit({ findings, onChange, onSubmit, feedback, isCompleted }: FindingsFormProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Your Findings</CardTitle>
-        <CardDescription>Describe what you think is happening with the data</CardDescription>
-      </CardHeader>
+    <Card className="border-none shadow-none">
       <CardContent>
         <Textarea
           placeholder="Enter your findings here..."
