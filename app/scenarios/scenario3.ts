@@ -88,6 +88,7 @@ export const scenario3: ScenarioProps = {
     "There's been a spike in organic visitors recently, but many of them don't seem interested in signing up. As a result, even though traffic is up, the signup rate is down.",
     "Organic sources drove more visitors to the site, but because those visitors are less engaged or lower intent, the signup rate dropped even though total visits went up.",
     "The signup rate decline isn't from a drop in signups, but from an increase in visitors (mostly from organic traffic) who aren't signing up.",
+    "xVisitors in social channel decreased. This channel makes up the majority of visitors and signups. Therefore, the decrease in visitors to social channel decreased sign-ups overall.",
   ],
   embeddingFile: "/scenarios/scenario3-embeddings.json",
   threshold: 0.8,

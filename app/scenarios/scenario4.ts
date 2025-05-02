@@ -86,7 +86,8 @@ export const scenario4: ScenarioProps = {
     "Lower sales volume combined with higher revenue implies a rise in average selling price.",
     "The decrease in units sold is outweighed by the higher price point of the new products.",
     "The sale rate has decreased because there appears to be a new sweater type, called fancy, that is distracting users from purchasing, but it more than makes up for that fact with the revenue impact which has been positive.",
-  ],
+    "Fancy sweater sales cannibalized regular ones, but overall revenue rose as the gain from fancy sweaters outweighed the loss from regular sweaters.",
+],
   embeddingFile: "/scenarios/scenario4-embeddings.json",
   threshold: 0.8,
 }
