@@ -51,6 +51,11 @@ export const scenario3: ScenarioProps = {
     "signups": "number",
     "signup_rate": "pct",
   },
+  dataDictionary: {
+    "visitors": "Number of visitors to the site per day",
+    "signups": "Number of signups on the site per day",
+    "signup_rate": "Signups / Visitors",
+  },
   breakdowns: ["device", "browser", "channel"],
   filters: {
     "device": ["desktop", "mobile", "tablet"],

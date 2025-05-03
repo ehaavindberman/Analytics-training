@@ -25,6 +25,7 @@ export type ScenarioProps = {
   yAxisDefault: string
   yAxisOptions: string[]
   yAxisFormats: Record<string, YAxisFormat>
+  dataDictionary: Record<string, string>
   breakdowns: string[]
   filters: {
     [filterName: string]: string[]

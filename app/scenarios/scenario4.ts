@@ -46,6 +46,12 @@ export const scenario4: ScenarioProps = {
     "visitors": "number",
     "sales": "number",
   },
+  dataDictionary: {
+    "visitors": "Number of visitors to the site per day",
+    "sales": "Number of sweaters sold on the site per day",
+    "sale_rate": "Sales / Visitors",
+    "revenue": "Sales * Price",
+  },
   breakdowns: ["returning_user", "channel", "sweater", "device"],
   filters: {
     "returning_user": ["returning", "new"],

@@ -11,6 +11,7 @@ import { ChartControls } from "./cards/ChartControls"
 import { ChartCard } from "./cards/ChartCard"
 import { FindingsSubmit } from "./cards/FindingsSubmit"
 import { FiltersCard } from "./cards/FiltersCard"
+import { DataDictionaryCard } from "./cards/DataDictionaryCard"
 import { ExtraInfoCard } from "./cards/ExtraInfoCard"
 import ScenarioDescriptionCard from "./cards/ScenarioDescriptionCard"
 import type { ScenarioProps } from "@/app/components/types"
@@ -162,6 +163,9 @@ export default function AnalyticsDashboard({
                 filters={filters} 
                 setFilters={setFilters} 
                 scenario={scenario}
+              />
+              <DataDictionaryCard
+                dataDictionary={scenario.dataDictionary}
               />
             </div>
           </div>
