@@ -8,6 +8,7 @@ import GameIntro from "./components/GameIntro"
 import AboutPage from "./components/AboutPage"
 import type { ScenarioProps } from "./components/types"
 
+
 type CompletedScenario = {
   id: number
   time: number
@@ -106,7 +107,6 @@ export default function Home() {
           </>
         ) : showScenarioSelection ? (
           <div className="container mx-auto p-4 max-w-6xl">
-            <h1 className="text-3xl font-bold mb-8 text-center text-primary">🔥 FyreDrill 🔥</h1>
             <ScenarioSelection
               onSelectScenario={handleSelectScenario}
               completedScenarios={completedScenarios}
