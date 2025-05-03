@@ -147,6 +147,10 @@ export default function AnalyticsDashboard({
                 chartType={chartType}
                 filters={filters}
               />
+              <ExtraInfoCard 
+            buttons={getExtraInfoButtons()} 
+            isCompleted={isCompleted}
+          />
             </div>
             <div className="w-full lg:w-1/3 space-y-4">
               <ChartControls
@@ -169,10 +173,6 @@ export default function AnalyticsDashboard({
               />
             </div>
           </div>
-          <ExtraInfoCard 
-            buttons={getExtraInfoButtons()} 
-            isCompleted={isCompleted}
-          />
         </div>
       </div>
     </div>
