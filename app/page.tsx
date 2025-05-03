@@ -113,7 +113,7 @@ export default function Home() {
             />
             <button
               onClick={() => setShowAboutPage(true)}
-              className="fixed bottom-6 right-6 bg-muted text-bold px-4 py-2 rounded shadow hover:bg-muted/80"
+              className="fixed bottom-6 right-6 bg-primary text-white text-bold px-4 py-2 rounded shadow hover:bg-primary/80"
             >
               About
             </button>
