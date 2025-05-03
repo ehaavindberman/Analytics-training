@@ -1,9 +1,22 @@
-import { useEffect } from "react"
 import { pipeline } from "@xenova/transformers"
 
 type CorrectAnswerEmbedding = {
   answer: string
   embedding: number[]
+}
+
+function cosineSimilarity(a: number[], b: number[]): number {
+  const dot = a.reduce((sum, val, i) => sum + val * b[i], 0)
+  const magA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0))
+  const magB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0))
+  return dot / (magA * magB)
+}
+
+function splitIntoSentences(text: string): string[] {
+  return text
+    .split(/(?<=[.!?])\s+/)
+    .map(sentence => sentence.trim())
+    .filter(Boolean)
 }
 
 export async function testUserAnswer(
@@ -16,20 +29,22 @@ export async function testUserAnswer(
 
   const embedder = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2")
 
-  const userEmbedding = Array.from(
-    (await embedder(userAnswer, { pooling: "mean", normalize: true })).data
-  )
+  const userParts = [userAnswer, ...splitIntoSentences(userAnswer)]
 
-  function cosineSimilarity(a: number[], b: number[]) {
-    const dot = a.reduce((sum, val, i) => sum + val * b[i], 0)
-    const magA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0))
-    const magB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0))
-    return dot / (magA * magB)
+  for (const part of userParts) {
+    const embedding = Array.from(
+      (await embedder(part, { pooling: "mean", normalize: true })).data
+    )
+
+    const similarities = correctData.map(({ embedding: correctEmbedding }) =>
+      cosineSimilarity(embedding, correctEmbedding)
+    )
+
+    const bestScore = Math.max(...similarities)
+    if (bestScore >= threshold) {
+      return true
+    }
   }
 
-  const similarities = correctData.map(({ embedding }) => cosineSimilarity(userEmbedding, embedding))
-  const bestScore = Math.max(...similarities)
-  const isCorrect = bestScore >= threshold
-
-  return isCorrect
+  return false
 }
