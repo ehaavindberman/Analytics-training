@@ -19,7 +19,7 @@ const AboutPage = () => {
         <h2 className="text-2xl font-semibold mb-2">Why FyreDrill?</h2>
         <p className="text-base text-gray-700">
           There are 4 things it takes to become an expert according to the great explainer Derek Muller at Veritasium
-          (<a className="font-href" href="https://www.youtube.com/watch?v=5eW6Eagr9XA" target="_blank">link</a>):
+          (<a className="underline text-primary hover:text-primary/80" href="https://www.youtube.com/watch?v=5eW6Eagr9XA" target="_blank">link</a>):
         </p>
         <ul className="list-disc list-inside text-base text-gray-700 ml-4 mb-2">
           <li>Don't get too comfortable</li>
