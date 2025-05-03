@@ -27,7 +27,7 @@ export function FiltersCard({ filters, setFilters, scenario }: FiltersCardProps)
         <div className="grid grid-cols-3 gap-4">
           {Object.entries(scenario.filters).map(([key, options]) => (
             <div key={key}>
-              <Label htmlFor={key} className="block">
+              <Label htmlFor={key} className="block mb-2">
                 {formatLabel(key)}
               </Label>
               <Select value={filters[key] || "all"} onValueChange={(value) => updateFilter(key, value)}>

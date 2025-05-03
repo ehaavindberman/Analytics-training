@@ -24,7 +24,7 @@ export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBre
       <CardContent>
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <Label htmlFor="y-axis" className="block">Y-Axis</Label>
+            <Label htmlFor="y-axis" className="block mb-2">Y-Axis</Label>
             <Select value={yAxis} onValueChange={(value) => setYAxis(value)}>
               <SelectTrigger id="y-axis" className="w-full">
                 <SelectValue placeholder="Select..." />
@@ -38,7 +38,7 @@ export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBre
           </div>
 
           <div>
-            <Label htmlFor="breakdown" className="block">Breakdown</Label>
+            <Label htmlFor="breakdown" className="block mb-2">Breakdown</Label>
             <Select value={breakdown} onValueChange={(value) => setBreakdown(value as any)}>
               <SelectTrigger id="breakdown" className="w-full">
                 <SelectValue placeholder="None" />
@@ -53,7 +53,7 @@ export function ChartControls({ yAxis, setYAxis, yAxisOptions, breakdown, setBre
           </div>
 
           <div>
-            <Label htmlFor="chart-type" className="block">Chart Type</Label>
+            <Label htmlFor="chart-type" className="block mb-2">Chart Type</Label>
             <Select value={chartType} onValueChange={(value) => setChartType(value as any)}>
               <SelectTrigger id="chart-type" className="w-full">
                 <SelectValue placeholder="Line Chart" />
