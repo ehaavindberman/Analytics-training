@@ -56,7 +56,7 @@ const AboutPage = () => {
           <li>Improved answer AI</li>
           <li>Support for multiple datasets in a single scenario</li>
           <li>Industry-specific scenarios (think, a set of scenarios for B2B or two sided markets or subscription businesses, etc...)</li>
-          <li>Many more scenarios and a generalized, easy to use scenario generator tool</li>
+          <li>Allow users to upload their own scenarios along with a generalized, easy to use scenario generator tool</li>
         </ul>
         <br></br>
         <p className="text-base text-gray-700">
