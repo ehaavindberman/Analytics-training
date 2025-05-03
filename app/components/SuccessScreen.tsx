@@ -11,17 +11,17 @@ type Props = {
 
 export default function SuccessScreen({ onContinue, scenario }: Props) {
   return (
-    <Card className="max-w-2xl mx-auto hand-drawn-font text-lg">
+    <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-3xl">Congratulations! You've Solved Scenario {scenario.id}</CardTitle>
       </CardHeader>
       <CardContent>
         {scenario.successText.map((text, index) => (
-          <p key={index} className="text-xl">
+          <p key={index}>
             {text}
           </p>
         ))}
-        <Button className="text-lg mt-7" onClick={onContinue}>
+        <Button className="mt-7" onClick={onContinue}>
             {scenario.id === 3 ? "Finish training" : "Continue to next scenario"}
         </Button>
       </CardContent>

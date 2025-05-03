@@ -17,7 +17,7 @@ export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: Ch
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-3xl">{formatLabel(yAxis)} per {formatLabel(scenario.xAxis)} {breakdown !== "none" && ` by ${formatLabel(breakdown)}`}</CardTitle>
+        <CardTitle>{formatLabel(yAxis)} per {formatLabel(scenario.xAxis)} {breakdown !== "none" && ` by ${formatLabel(breakdown)}`}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[400px] w-full">

@@ -111,14 +111,10 @@ export default function AnalyticsDashboard({
   
 
   return (
-    <div className="space-y-4 hand-drawn-font">
+    <div className="space-y-4">
       <Card className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <Button 
-            variant="outline" 
-            onClick={onBackToScenarios}
-            className="text-lg"
-          >
+          <Button variant="outline" onClick={onBackToScenarios}>
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Scenarios
           </Button>
           <ScenarioTimer time={time} isRunning={isTimerRunning} />
@@ -136,7 +132,7 @@ export default function AnalyticsDashboard({
       </Card>  
       <div className="relative rounded-t-lg shadow-md space-y-10">
         {/* Someday this can be tabs for multiple charts for multiple data sources */}
-        <div className="absolute -top-7 bg-[#7D934B] text-white px-4 py-1 rounded-t-md text-sm font-medium">
+        <div className="absolute -top-7 bg-[#7D934B] text-white px-4 py-1 rounded-t-md font-medium">
           Charts 
         </div>
 

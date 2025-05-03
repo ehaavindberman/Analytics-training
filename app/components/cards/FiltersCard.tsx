@@ -27,11 +27,11 @@ export function FiltersCard({ filters, setFilters, scenario }: FiltersCardProps)
         <div className="grid grid-cols-3 gap-4">
           {Object.entries(scenario.filters).map(([key, options]) => (
             <div key={key}>
-              <Label htmlFor={key} className="block text-lg">
+              <Label htmlFor={key} className="block">
                 {formatLabel(key)}
               </Label>
               <Select value={filters[key] || "all"} onValueChange={(value) => updateFilter(key, value)}>
-                <SelectTrigger id={key} className="w-full text-md">
+                <SelectTrigger id={key} className="w-full">
                   <SelectValue placeholder="All" />
                 </SelectTrigger>
                 <SelectContent>

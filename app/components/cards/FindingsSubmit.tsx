@@ -19,9 +19,9 @@ export function FindingsSubmit({ findings, onChange, onSubmit, feedback, isCompl
           placeholder="Enter your findings here..."
           value={findings}
           onChange={(e) => onChange(e.target.value)}
-          className="mb-4 text-lg"
+          className="mb-4"
         />
-        <Button onClick={onSubmit} disabled={isCompleted} className="text-lg">
+        <Button onClick={onSubmit} disabled={isCompleted}>
           Submit Findings
         </Button>
         {feedback && <p className="mt-4 text-green-600">{feedback}</p>}

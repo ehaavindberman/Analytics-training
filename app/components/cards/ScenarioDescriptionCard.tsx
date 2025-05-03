@@ -7,9 +7,9 @@ type Props = {
 
 export default function ScenarioDescriptionCard({ scenario }: Props) {
   return (
-    <Card className="text-xl w-full border-none shadow-none">
+    <Card className="w-full border-none shadow-none">
       <CardContent className="mt-4">
-        <h1 className="text-3xl font-bold mb-4">{scenario.title}</h1>
+        <h1 className="font-bold mb-4">{scenario.title}</h1>
         {scenario.introText.map((text, index) => (
           <p key={index}>
             {text}

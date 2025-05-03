@@ -44,7 +44,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
   }
 
   return (
-    <div className="flex flex-col items-center divide-y divide-muted gap-y-12 min-h-screen p-4 hand-drawn-font">
+    <div className="flex flex-col items-center divide-y divide-muted gap-y-12 min-h-screen p-4">
       {scenarios.map((scenario, index) => {
         const completedScenario = completedScenarios.find((s) => s.id === scenario.id)
         const isLocked = index > 0 && !completedScenarios.find((s) => s.id === scenario.id - 1)
@@ -57,7 +57,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
             }`}
           >
             <CardHeader className="pb-0">
-              <CardTitle className="text-3xl font-handwritten">
+              <CardTitle>
                 {scenario.title}
               </CardTitle>
             </CardHeader>
@@ -71,18 +71,14 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
                       <Clock className="mr-1 h-4 w-4" />
                       Best Time: {formatTime(completedScenario.time)}
                     </div>
-                    <Button
-                      variant="outline"
-                      className="text-sm"
-                      onClick={() => handleShare(scenario.id, completedScenario.time)}
-                    >
+                    <Button variant="outline" onClick={() => handleShare(scenario.id, completedScenario.time)}>
                       <Share2 className="mr-1 h-4 w-4" />
                       Share
                     </Button>
                   </div>
                 ) : ( 
                   // keeping this with invisible so all cards keep the same height (I know it is sketchy...)
-                  <div className="invisible text-m text-muted-foreground flex flex-col space-y-2">
+                  <div className="invisible text-muted-foreground flex flex-col space-y-2">
                     <div className="flex items-center"><Clock className="mr-1 h-4 w-4" />Best Time:</div>
                     <Button variant="outline" className="text-sm"><Share2 className="mr-1 h-4 w-4" />Share</Button>
                   </div>

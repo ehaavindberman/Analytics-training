@@ -10,6 +10,6 @@ export function ScenarioTimer({ time, isRunning }: Props) {
     return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`
   }
 
-  return <div className="text-xl font-semibold">Time: {formatTime(time)}</div>
+  return <div className="font-semibold">Time: {formatTime(time)}</div>
 }
 
