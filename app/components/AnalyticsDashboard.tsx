@@ -111,7 +111,7 @@ export default function AnalyticsDashboard({
   
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-10 mb-5">
       <Card className="p-6">
         <div className="flex justify-between items-start mb-4">
           <Button variant="outline" onClick={onBackToScenarios}>
@@ -130,16 +130,14 @@ export default function AnalyticsDashboard({
           isCompleted={isCompleted}
         />
       </Card>  
-      <div className="relative rounded-t-lg shadow-md space-y-10">
+      <div className="relative rounded-lg shadow-md space-y-10">
         {/* Someday this can be tabs for multiple charts for multiple data sources */}
-        <div className="absolute -top-7 bg-[#7D934B] text-white px-4 py-1 rounded-t-md font-medium">
+        {/* <div className="absolute -top-7 bg-[#7D934B] text-white px-4 py-1 rounded-t-md font-medium">
           Charts 
-        </div>
+        </div> */}
 
-        {/* Content */}
-        <div className="bg-white rounded-b-lg p-4">
+        <div className="bg-white rounded-lg p-4">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Chart on the left, full width on small screens, 2/3 width on large */}
             <div className="w-full lg:w-2/3 space-y-4">
               <ChartCard
                 scenario={scenario}
@@ -149,8 +147,6 @@ export default function AnalyticsDashboard({
                 filters={filters}
               />
             </div>
-
-            {/* Controls and Filters on the right or below */}
             <div className="w-full lg:w-1/3 space-y-4">
               <ChartControls
                 yAxis={yAxis}
@@ -169,9 +165,6 @@ export default function AnalyticsDashboard({
               />
             </div>
           </div>
-        </div>
-      
-        <div className="col-span-3 bg-white rounded-lg p-4">
           <ExtraInfoCard 
             buttons={getExtraInfoButtons()} 
             isCompleted={isCompleted}

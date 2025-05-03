@@ -25,7 +25,7 @@ export function ExtraInfoCard({ buttons, isCompleted }: ExtraInfoCardProps) {
   }
 
   return (
-    <Card className="w-full border-none shadow-none bg-inherit min-h-[380px]">
+    <Card className="w-full border-none shadow-none bg-inherit">
       <CardHeader>
         <CardTitle>Extra Information</CardTitle>
         <CardDescription>Get additional insights at a time cost</CardDescription>
@@ -34,7 +34,7 @@ export function ExtraInfoCard({ buttons, isCompleted }: ExtraInfoCardProps) {
       <CardContent>
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Buttons */}
-          <div className="w-full lg:w-1/4 space-y-2">
+          <div className="w-full lg:w-1/3 space-y-2">
             {buttons.map((button, index) => (
               <Button
                 key={index}
