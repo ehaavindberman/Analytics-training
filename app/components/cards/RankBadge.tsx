@@ -27,7 +27,6 @@ export default function RankBadge({ count, totalTime }: RankBadgeProps) {
 
   const shareText = `🔥🔥🤓 I've achieved the rank of ${rank.name} at 🔥FyreDrill🔥 in ${formatTime(totalTime)}! Try it yourself at fyredrill.dev 👀🔥🔥`
 
-   
   const [showPopup, setShowPopup] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -55,8 +54,7 @@ export default function RankBadge({ count, totalTime }: RankBadgeProps) {
 
   return (
     <div className="absolute bg-muted px-3 py-1 rounded text-sm shadow text-center">
-        
-        <p className="">
+        <p>
             Rank: {rank.icon}{rank.name}
             {count > 0 && (
                 <button
@@ -86,6 +84,5 @@ export default function RankBadge({ count, totalTime }: RankBadgeProps) {
         </div>
       )}
     </div>
-
   )
 }
