@@ -76,7 +76,7 @@ const AboutPage = () => {
           Interested in a bespoke trainin or have feedback or ideas for FyreDrill? We'd love to hear from you! Reach out directly or share your experience with your team and network to help us grow.
         </p>
         <p className="text-base text-gray-700 mt-2">
-          Email: <a href="mailto:ehb@fyredrill.dev" className="text-blue-600 underline">eric@fyredrill.dev</a>
+          Email: <a href="mailto:ehb@fyredrill.dev" className="text-blue-600 underline">ehb@fyredrill.dev</a>
         </p>
       </section>
     </div>
