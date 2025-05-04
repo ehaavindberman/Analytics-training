@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Clock } from "lucide-react"
 import RankBadge from "./cards/RankBadge"
-import { scenarios } from "@/app/scenarios"
+import { scenarios } from "@/app/components/scenarios"
 import type { ScenarioProps } from "@/app/components/types"
 
 
