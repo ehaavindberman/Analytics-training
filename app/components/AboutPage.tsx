@@ -49,14 +49,15 @@ const AboutPage = () => {
           My long term vision for FyreDrill would be both a consulting company available for bespoke trainings 
           (get in touch if you're interested!) 
           and a library of scenarios similar to Duolingo and Khan Academy with branching paths a user can take based on the different metrics and company types they're interested in.
-          Ultimately, scenarios could be created by myself or by anyone who be user generated.
+          Ultimately, scenarios could even be created and uploaded by the community for private and public use.
         </p>
         <ul className="list-disc list-inside text-base text-gray-700 ml-4">
-          <li>Offer hints or help when users are stuck</li>
+          <li>Many more scenarios, I have tons of ideas especially for higher difficulty</li>
           <li>Improved answer AI</li>
           <li>Support for multiple datasets in a single scenario</li>
           <li>Industry-specific scenarios (think, a set of scenarios for B2B or two sided markets or subscription businesses, etc...)</li>
           <li>Allow users to upload their own scenarios along with a generalized, easy to use scenario generator tool</li>
+          <li>SQL mode where users can also learn or sharpen their SQL skills</li>
         </ul>
         <br></br>
         <p className="text-base text-gray-700">
@@ -65,15 +66,17 @@ const AboutPage = () => {
           One of the issues I'd like to solve for is when to push back against stakeholders and not look into a question. 
           Another issue is rating responses. 
           Currently, answer keys do not care if you describe next steps which is hugely important for any analyst communication with stakeholders.
-          I'd also love to include a SQL mode where users can also learn or sharpen their SQL skills.
           Finally, I think having a certificate or better way to track progress will be key. 
+          <br></br><br></br>
+          I am also aware of how AI will change these types of tasks, 
+          but I believe this type of thinking and investigating will always be a useful skill and these types of questions will go to analysts for quite a while yet.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold mb-2">Contact</h2>
         <p className="text-base text-gray-700">
-          Interested in a bespoke trainin or have feedback or ideas for FyreDrill? We'd love to hear from you! Reach out directly or share your experience with your team and network to help us grow.
+          Interested in a bespoke training or have feedback or ideas for FyreDrill? I'd love to hear from you! Reach out directly or share your experience with your team and network to help us grow.
         </p>
         <p className="text-base text-gray-700 mt-2">
           Email: <a href="mailto:ehaavindberman@gmail.com" className="text-blue-600 underline">ehaavindberman@gmail.com</a>
