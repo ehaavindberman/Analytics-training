@@ -22,7 +22,7 @@ export default function SuccessScreen({ onContinue, scenario }: Props) {
           </p>
         ))}
         <Button className="mt-7" onClick={onContinue}>
-            "Continue to next scenario"
+            Continue to next scenario
         </Button>
       </CardContent>
     </Card>
