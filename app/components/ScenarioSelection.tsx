@@ -57,7 +57,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
                     <div className="text-m text-muted-foreground flex flex-col">
                       <div className="flex items-center">
                         <Clock className="mr-1 h-4 w-4" />
-                        Best Time: {formatTime(completedScenario.time)}
+                        Time: {formatTime(completedScenario.time)}
                       </div>
                     </div>
                   ) : ( <div></div>
