@@ -36,6 +36,12 @@ export default function Home() {
     }
   }, [])
 
+  useEffect(() => {
+    if (scenario && !showSuccess && !showScenarioSelection && !showIntro) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [scenario, showSuccess, showScenarioSelection, showIntro])
+
   const handleStartGame = () => {
     setShowGameIntro(false)
     setShowScenarioSelection(true)
