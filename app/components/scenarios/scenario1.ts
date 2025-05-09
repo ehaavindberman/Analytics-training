@@ -47,6 +47,7 @@ export const scenario1: ScenarioProps = {
   calculatedFields: [
     {
       name: "signup_rate",
+      requiredFields: ["signups", "visitors"],
       calculate: ({ signups, visitors }) => signups / visitors,
       dataTypes: ["number"],
       format: "pct",

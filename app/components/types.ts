@@ -1,5 +1,6 @@
 type CalculatedField = {
   name: string
+  requiredFields: string[]
   calculate: (input: { [key: string]: any }) => number
   dataTypes: Array<"string" | "number" | "date">
   format: string

@@ -64,6 +64,7 @@ export const scenario4: ScenarioProps = {
   calculatedFields: [
     {
       name: "sale_rate",
+      requiredFields: ["sales", "visitors"],
       calculate: ({ sales, visitors }) => sales / visitors,
       dataTypes: ["number"],
       format: "pct",

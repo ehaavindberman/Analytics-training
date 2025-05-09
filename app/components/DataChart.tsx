@@ -26,6 +26,22 @@ type Props = {
   filters: { [filterName: string]: string }
 }
 
+function getAllRequiredFields(scenario: ScenarioProps): string[] {
+  const fields = new Set<string>()
+
+  for (const y of scenario.yAxisOptions) {
+    fields.add(y)
+  }
+
+  for (const field of scenario.calculatedFields ?? []) {
+    for (const required of field.requiredFields ?? []) {
+      fields.add(required)
+    }
+  }
+
+  return Array.from(fields)
+}
+
 export default function DataChart({ scenario, yAxis, breakdown, filters, chartType }: Props) {
 
   const data = DataChartLoader({scenario})
@@ -47,6 +63,10 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
       breakdown !== "none" ? `${row[scenario.xAxis]}|${row[breakdown]}` : row[scenario.xAxis]
     )
 
+    const requiredFields = new Set([
+      ...getAllRequiredFields(scenario),
+    ])
+
     const aggregated: Record<string, any>[] = []
     for (const date of allDates) {
       if (breakdown === "none") {
@@ -54,8 +74,8 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
         const result: Record<string, any> = {
           [scenario.xAxis]: date,
         }
-
-        for (const field of scenario.yAxisOptions) {
+        
+        for (const field of requiredFields) {
           const isCalculated = scenario.calculatedFields?.some((f) => f.name === field)
           if (!isCalculated) {
             result[field] = _.sumBy(rows, (row) => Number(row[field] ?? 0))

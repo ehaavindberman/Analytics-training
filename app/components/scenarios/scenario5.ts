@@ -45,16 +45,16 @@ export const scenario5: ScenarioProps = {
     },
   ],
   yAxisDefault: "two_month_retention_rate",
-  yAxisOptions: ["visitors", "signups", "one_week_retention_rate", "one_month_retention_rate", "two_month_retention_rate", "retained_1_week", "retained_1_month", "retained_2_months"],
+  yAxisOptions: ["visitors", "signups", "one_week_retention_rate", "one_month_retention_rate", "two_month_retention_rate"], // "retained_1_week", "retained_1_month", "retained_2_months"],
   yAxisFormats: {
     "visitors": "number",
     "signups": "number",
     "one_week_retention_rate": "pct",
     "one_month_retention_rate": "pct",
     "two_month_retention_rate": "pct",
-    "retained_1_week": "number",
-    "retained_1_month": "number",
-    "retained_2_months": "number",
+    // "retained_1_week": "number",
+    // "retained_1_month": "number",
+    // "retained_2_months": "number",
   },
   dataDictionary: {
     "visitors": "Number of visitors to the site per day",
@@ -74,18 +74,21 @@ export const scenario5: ScenarioProps = {
   calculatedFields: [
     {
       name: "one_week_retention_rate",
+      requiredFields: ["signups", "retained_1_week"],
       calculate: ({ signups, retained_1_week }) => retained_1_week / signups,
       dataTypes: ["number"],
       format: "pct",
     },
     {
       name: "one_month_retention_rate",
+      requiredFields: ["signups", "retained_1_month"],
       calculate: ({ signups, retained_1_month }) => retained_1_month / signups,
       dataTypes: ["number"],
       format: "pct",
     },
     {
       name: "two_month_retention_rate",
+      requiredFields: ["signups", "retained_2_months"],
       calculate: ({ signups, retained_2_months }) => retained_2_months / signups,
       dataTypes: ["number"],
       format: "pct",
