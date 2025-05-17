@@ -37,11 +37,10 @@ export default function AnalyticsDashboard({
   const [breakdown, setBreakdown] = useState<string>("none")
   const [chartType, setChartType] = useState<ChartType>("line")
   const [findings, setFindings] = useState("")
-  const [feedback, setFeedback] = useState("")
+  const [submissionCount, setSubmissionCount] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false)
   const [isTimerRunning, setIsTimerRunning] = useState(true)
   const [time, setTime] = useState(initialTime)
-  
   const [filters, setFilters] = useState<{ [key: string]: string }>({})
 
   useEffect(() => {
@@ -73,15 +72,14 @@ export default function AnalyticsDashboard({
 
   const handleSubmit = async () => {
     setIsTimerRunning(false);
-
-    const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile);
   
+    const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile);
+
+    setSubmissionCount((count) => count + 1);
+    
     if (isCorrect) {
-      setFeedback(scenario.feedbackText.correct);
       setIsCompleted(true);
       onSuccess(time);
-    } else {
-      setFeedback(scenario.feedbackText.incorrect);
     }
   }
 
@@ -127,7 +125,7 @@ export default function AnalyticsDashboard({
           findings={findings}
           onChange={setFindings}
           onSubmit={handleSubmit}
-          feedback={feedback}
+          submissionCount={submissionCount}
           isCompleted={isCompleted}
         />
       </Card>  

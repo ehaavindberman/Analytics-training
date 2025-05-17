@@ -1,17 +1,42 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 
 type FindingsFormProps = {
   findings: string
   onChange: (value: string) => void
   onSubmit: () => void
-  feedback: string
+  submissionCount: number
   isCompleted: boolean
 }
 
-export function FindingsSubmit({ findings, onChange, onSubmit, feedback, isCompleted }: FindingsFormProps) {
+const positiveFeedback = "Correct!"
+const negativeFeedback = [
+  "Not quite. Try again.",
+  "That's not it, but I believe in you.",
+  "Give it another try. You can do it!",
+]
+
+export function FindingsSubmit({
+  findings,
+  onChange,
+  onSubmit,
+  submissionCount,
+  isCompleted,
+}: FindingsFormProps) {
+  const [feedback, setFeedback] = useState("")
+  const [feedbackIndex, setFeedbackIndex] = useState(0)
+
+  useEffect(() => {
+    if (submissionCount === 0) return
+
+    if (!isCompleted) {
+      setFeedback(negativeFeedback[feedbackIndex])
+      setFeedbackIndex((prev) => (prev + 1) % negativeFeedback.length)
+    }
+  }, [submissionCount, isCompleted])
+
   return (
     <Card className="border-none shadow-none">
       <CardContent>
@@ -24,7 +49,11 @@ export function FindingsSubmit({ findings, onChange, onSubmit, feedback, isCompl
         <Button onClick={onSubmit} disabled={isCompleted}>
           Submit Findings
         </Button>
-        {feedback && <p className="mt-4 text-green-600">{feedback}</p>}
+        {feedback && (
+          <p className={`mt-4 ${feedback === positiveFeedback ? "text-green-600" : "text-red-600"}`}>
+            {feedback}
+          </p>
+        )}
       </CardContent>
     </Card>
   )
