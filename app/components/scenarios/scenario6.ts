@@ -5,6 +5,7 @@
 export const scenario6: ScenarioProps = {
   id: 6,
   title: "TechCorp",
+  category: "intro",
   introText: [
     "",
     "Please investigate and let us know what is going on!",

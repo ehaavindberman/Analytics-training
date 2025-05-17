@@ -3,6 +3,7 @@ import type { ScenarioProps } from "@/app/components/types"
 export const scenario2: ScenarioProps = {
   id: 2,
   title: "Where'd the signups go?",
+  category: "intro",
   introText: [
     "We're back with another issue. This time the product team noticed that the signups have been low for the past few days",
     "Your task is to figure out what's going on.",

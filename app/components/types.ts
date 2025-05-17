@@ -11,6 +11,7 @@ type YAxisFormat = "number" | "pct" | "currency"
 export type ScenarioProps = {
   id: number
   title: string
+  category: "intro" | "notflix" | "sweater"
   introText: string[]
   successText: string[]
   feedbackText: {

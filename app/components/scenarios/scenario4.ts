@@ -3,6 +3,7 @@ import type { ScenarioProps } from "@/app/components/types"
 export const scenario4: ScenarioProps = {
   id: 4,
   title: "Sweater Weather",
+  category: "sweater",
   introText: [
     "Welcome to Sweater Weather! We sell sweaters to real people. We've just noticed that our sale rate has decreased.",
     "Can you tell us what's going on there and if it is effecting revenue?",
