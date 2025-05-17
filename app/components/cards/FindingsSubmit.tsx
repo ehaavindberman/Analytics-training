@@ -11,7 +11,6 @@ type FindingsFormProps = {
   isCompleted: boolean
 }
 
-const positiveFeedback = "Correct!"
 const negativeFeedback = [
   "Not quite. Try again.",
   "That's not it, but I believe in you.",
@@ -50,7 +49,7 @@ export function FindingsSubmit({
           Submit Findings
         </Button>
         {feedback && (
-          <p className={`mt-4 ${feedback === positiveFeedback ? "text-green-600" : "text-red-600"}`}>
+          <p className="mt-4 text-red-600">
             {feedback}
           </p>
         )}
