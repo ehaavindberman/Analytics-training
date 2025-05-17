@@ -40,7 +40,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
         <RankBadge count={completedScenarios.length} totalTime={totalTime} />
       </div>
       <div className="space-y-8 max-w-5xl mx-auto p-4">
-        <Card className="border-2 border-primary bg-transparent">
+        <Card className="handdrawn border-2 border-primary bg-transparent">
           <CardHeader>
             <CardTitle>Introduction challenges</CardTitle>
             <p className="text-muted-foreground text-sm">Let's get used to the format and choose a path from there</p>

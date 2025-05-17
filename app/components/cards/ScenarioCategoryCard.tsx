@@ -26,7 +26,7 @@ export function ScenarioCategoryCard({ title, description, scenarios, completedS
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <Card className="bg-transparent border-2 border-primary w-80">
+      <Card className="bg-transparent border-2 border-primary w-80 handdrawn">
         <CardHeader className="flex flex-row justify-between items-center cursor-pointer" onClick={() => setOpen(!open)}>
           <div>
             <CardTitle>{title}</CardTitle>

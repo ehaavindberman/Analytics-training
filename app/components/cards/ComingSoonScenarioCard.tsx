@@ -8,7 +8,7 @@ type ComingSoonScenarioCardProps = {
 export function ComingSoonScenarioCard({ title, description }: ComingSoonScenarioCardProps) {
 
   return (
-    <Card className="opacity-60 border-2 border-primary bg-transparent w-80 self-start">
+    <Card className="handdrawn opacity-60 border-2 border-primary bg-transparent w-80 self-start">
         <CardHeader className="flex flex-row justify-between items-center">
         <div>
             <CardTitle>{title}</CardTitle>
