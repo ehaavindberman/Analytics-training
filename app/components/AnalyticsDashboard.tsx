@@ -26,18 +26,21 @@ export default function AnalyticsDashboard({
   onBackToScenarios,
   initialTime,
   updateScenarioTime,
+  submissionCount,
+  setSubmissionCount,
 }: {
-  onSuccess: (time: number) => void
+  onSuccess: (time: number, answers: number) => void
   scenario: ScenarioProps
   onBackToScenarios: () => void
   initialTime: number
   updateScenarioTime: (id: number, time: number) => void
+  submissionCount: number
+  setSubmissionCount: (count: number) => void
 }) {
   const [yAxis, setYAxis] = useState<string>(scenario.yAxisDefault as any)
   const [breakdown, setBreakdown] = useState<string>("none")
   const [chartType, setChartType] = useState<ChartType>("line")
   const [findings, setFindings] = useState("")
-  const [submissionCount, setSubmissionCount] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false)
   const [isTimerRunning, setIsTimerRunning] = useState(true)
   const [time, setTime] = useState(initialTime)
@@ -71,15 +74,16 @@ export default function AnalyticsDashboard({
   }, [isTimerRunning, scenario, updateScenarioTime])
 
   const handleSubmit = async () => {
-    setIsTimerRunning(false);
+    setIsTimerRunning(false)
   
-    const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile);
+    const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile)
 
-    setSubmissionCount((count) => count + 1);
+    const newCount = submissionCount + 1;
+    setSubmissionCount(newCount)
     
     if (isCorrect) {
-      setIsCompleted(true);
-      onSuccess(time);
+      setIsCompleted(true)
+      onSuccess(time, newCount)
     }
   }
 
@@ -116,7 +120,10 @@ export default function AnalyticsDashboard({
           <Button variant="outline" onClick={onBackToScenarios}>
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Scenarios
           </Button>
-          <ScenarioTimer time={time} isRunning={isTimerRunning} />
+          <div>
+            <ScenarioTimer time={time} isRunning={isTimerRunning} />
+            <p>Answer count: {submissionCount}</p> 
+          </div>
         </div>
         <ScenarioDescriptionCard 
           scenario={scenario} 

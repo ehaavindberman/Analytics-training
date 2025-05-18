@@ -6,13 +6,8 @@ import SuccessScreen from "./components/SuccessScreen"
 import ScenarioSelection from "./components/ScenarioSelection"
 import GameIntro from "./components/GameIntro"
 import AboutPage from "./components/AboutPage"
-import type { ScenarioProps } from "./components/types"
+import type { ScenarioProps, CompletedScenario } from "@/app/components/types"
 
-
-type CompletedScenario = {
-  id: number
-  time: number
-}
 
 type ScenarioTime = {
   id: number
@@ -28,11 +23,17 @@ export default function Home() {
   const [scenario, setScenario] = useState<ScenarioProps | null>(null)
   const [completedScenarios, setCompletedScenarios] = useState<CompletedScenario[]>([])
   const [scenarioTimes, setScenarioTimes] = useState<ScenarioTime[]>([])
+  const [scenarioSubmissions, setScenarioSubmissions] = useState<Record<number, number>>({})
 
   useEffect(() => {
     const storedTimes = localStorage.getItem("scenarioTimes")
     if (storedTimes) {
       setScenarioTimes(JSON.parse(storedTimes))
+    }
+
+    const storedSubmissions = localStorage.getItem("scenarioSubmissions")
+    if (storedSubmissions) {
+      setScenarioSubmissions(JSON.parse(storedSubmissions))
     }
   }, [])
 
@@ -47,7 +48,7 @@ export default function Home() {
     setShowScenarioSelection(true)
   }
 
-  const handleSuccess = (time: number) => {
+  const handleSuccess = (time: number, submissionCount: number) => {
     if (!scenario) return
     setShowSuccess(true)
 
@@ -55,15 +56,25 @@ export default function Home() {
       const existingIndex = prev.findIndex((s) => s.id === scenario.id)
       if (existingIndex >= 0) {
         const newCompleted = [...prev]
-        newCompleted[existingIndex] = { id: scenario.id, time }
+        newCompleted[existingIndex] = { id: scenario.id, time, submissionCount }
         return newCompleted
       }
-      return [...prev, { id: scenario.id, time }]
+      return [...prev, { id: scenario.id, time, submissionCount }]
     })
 
     setScenarioTimes((prev) => {
       const newTimes = prev.filter((s) => s.id !== scenario.id)
-      return [...newTimes, { id: scenario.id, time }]
+      const updatedTimes = [...newTimes, { id: scenario.id, time }]
+      localStorage.setItem("scenarioTimes", JSON.stringify(updatedTimes))
+      return updatedTimes
+    })
+  }
+
+  const setSubmissionCount = (scenarioId: number, count: number) => {
+    setScenarioSubmissions((prev) => {
+      const updated = { ...prev, [scenarioId]: count }
+      localStorage.setItem("scenarioSubmissions", JSON.stringify(updated))
+      return updated
     })
   }
 
@@ -133,6 +144,8 @@ export default function Home() {
             onBackToScenarios={handleBackToScenarios}
             initialTime={scenarioTimes.find((s) => s.id === scenario.id)?.time || 0}
             updateScenarioTime={updateScenarioTime}
+            submissionCount={scenarioSubmissions[scenario.id] || 0}
+            setSubmissionCount={(count) => setSubmissionCount(scenario.id, count)}
           />
         ) : null}
       </div>

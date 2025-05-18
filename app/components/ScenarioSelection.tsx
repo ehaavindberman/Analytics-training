@@ -5,13 +5,9 @@ import RankBadge from "./cards/RankBadge"
 import { ScenarioCategoryCard } from "./cards/ScenarioCategoryCard"
 import { ComingSoonScenarioCard } from "./cards/ComingSoonScenarioCard"
 import { scenarios } from "@/app/components/scenarios"
-import type { ScenarioProps } from "@/app/components/types"
+import type { ScenarioProps, CompletedScenario } from "@/app/components/types"
 import { formatTime } from "@/utils/format"
 
-type CompletedScenario = {
-  id: number
-  time: number
-}
 
 type Props = {
   onSelectScenario: (scenario: ScenarioProps) => void
@@ -59,6 +55,8 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
                         <div className="flex items-center text-muted-foreground text-sm mt-1">
                           <Clock className="w-4 h-4 mr-1" />
                           Time: {formatTime(completed.time)}
+                          <br/>
+                          Answers: {completed.submissionCount}
                         </div>
                       )}
                     </div>

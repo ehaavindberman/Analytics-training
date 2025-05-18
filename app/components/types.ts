@@ -48,3 +48,9 @@ export type ExtraInfoButton = {
   timeAdded: number
   infoText: string
 }
+
+export type CompletedScenario = {
+  id: number
+  time: number
+  submissionCount?: number
+}
