@@ -73,50 +73,14 @@ export default function AnalyticsDashboard({
     return () => clearInterval(interval)
   }, [isTimerRunning, scenario, updateScenarioTime])
 
-  useEffect(() => {
-    if (!localStorage.getItem('userId')) {
-      const newUserId = crypto.randomUUID();
-      localStorage.setItem('userId', newUserId);
-    }
-  }, [])
-
-  // const handleSubmit = async () => {
-  //   setIsTimerRunning(false)
-  
-  //   const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile)
-
-  //   const newCount = submissionCount + 1;
-  //   setSubmissionCount(newCount)
-    
-  //   if (isCorrect) {
-  //     setIsCompleted(true)
-  //     onSuccess(time, newCount)
-  //   }
-  // }
   const handleSubmit = async () => {
     setIsTimerRunning(false)
   
     const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile)
-  
-    const userId = localStorage.getItem('userId')
-  
-    // Send to backend
-    await fetch('/api/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId,
-        answerText: findings,
-        scenarioId: scenario.id,
-        isCorrect,
-        threshold: scenario.threshold,
-        timeTaken: time,
-      }),
-    })
-  
-    const newCount = submissionCount + 1
+
+    const newCount = submissionCount + 1;
     setSubmissionCount(newCount)
-  
+    
     if (isCorrect) {
       setIsCompleted(true)
       onSuccess(time, newCount)
