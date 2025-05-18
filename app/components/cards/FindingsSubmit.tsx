@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
+import { Loader2 } from "lucide-react"
 
 type FindingsFormProps = {
   findings: string
@@ -9,6 +10,7 @@ type FindingsFormProps = {
   onSubmit: () => void
   submissionCount: number
   isCompleted: boolean
+  isSubmitting: boolean
 }
 
 const negativeFeedback = [
@@ -23,6 +25,7 @@ export function FindingsSubmit({
   onSubmit,
   submissionCount,
   isCompleted,
+  isSubmitting,
 }: FindingsFormProps) {
   const [feedback, setFeedback] = useState("")
   const [feedbackIndex, setFeedbackIndex] = useState(0)
@@ -44,11 +47,18 @@ export function FindingsSubmit({
           value={findings}
           onChange={(e) => onChange(e.target.value)}
           className="mb-4"
+          disabled={isCompleted || isSubmitting}
         />
-        <Button onClick={onSubmit} disabled={isCompleted}>
-          Submit Findings
+        <Button 
+          onClick={onSubmit} 
+          disabled={isCompleted || isSubmitting}
+        >
+          {isSubmitting && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          {isSubmitting ? "Submitting..." : "Submit Findings"}
         </Button>
-        {feedback && (
+        {feedback && !isSubmitting && (
           <p className="mt-4 text-red-600">
             {feedback}
           </p>

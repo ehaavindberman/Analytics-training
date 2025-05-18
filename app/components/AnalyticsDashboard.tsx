@@ -45,6 +45,7 @@ export default function AnalyticsDashboard({
   const [isTimerRunning, setIsTimerRunning] = useState(true)
   const [time, setTime] = useState(initialTime)
   const [filters, setFilters] = useState<{ [key: string]: string }>({})
+  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     const initialFilters = Object.keys(scenario.filters).reduce((acc, key) => {
@@ -74,7 +75,8 @@ export default function AnalyticsDashboard({
   }, [isTimerRunning, scenario, updateScenarioTime])
 
   const handleSubmit = async () => {
-  
+    setSubmitting(true)
+
     const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile)
 
     const newCount = submissionCount + 1;
@@ -134,6 +136,7 @@ export default function AnalyticsDashboard({
           onSubmit={handleSubmit}
           submissionCount={submissionCount}
           isCompleted={isCompleted}
+          isSubmitting={submitting}
         />
       </Card>  
       <div className="relative rounded-lg shadow-md space-y-10">
