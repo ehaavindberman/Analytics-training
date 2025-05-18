@@ -74,7 +74,6 @@ export default function AnalyticsDashboard({
   }, [isTimerRunning, scenario, updateScenarioTime])
 
   const handleSubmit = async () => {
-    setIsTimerRunning(false)
   
     const isCorrect = await testUserAnswer(findings, scenario.threshold, scenario.embeddingFile)
 
@@ -82,6 +81,7 @@ export default function AnalyticsDashboard({
     setSubmissionCount(newCount)
     
     if (isCorrect) {
+      setIsTimerRunning(false)
       setIsCompleted(true)
       onSuccess(time, newCount)
     }
