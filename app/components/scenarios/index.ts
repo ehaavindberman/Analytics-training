@@ -3,6 +3,7 @@ import { scenario2 } from "./scenario2"
 import { scenario3 } from "./scenario3"
 import { scenario4 } from "./scenario4"
 import { scenario5 } from "./scenario5"
+import { scenario6 } from "./scenario6"
 
-export const scenarios = [scenario1, scenario2, scenario3, scenario4, scenario5]
+export const scenarios = [scenario1, scenario2, scenario3, scenario6, scenario4, scenario5]
 

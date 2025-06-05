@@ -1,236 +1,472 @@
-# we have data for the last 10 days, after the 8th day, 
-# visitors on the social channel drops by half
+# [Trend, location, visitors] 4 - 
+# over the past 3 months the share of users from the central has slowly increased and 
+# share from others has slowly dropped, the users from central signup at a lower rate 
+# so the overall signup rate decreases over time.
+
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta, time
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# ===== Config ===== #
-np.random.seed(5)
-filename = '../../public/scenarios/scenario6.csv'
-DAYS = 120
-START_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1) - timedelta(days=DAYS)
-END_DATE = datetime.combine(datetime.now(), time.min) - timedelta(days=1)
-BASE_CONVERSION = 0.05
-
-device_weights = {"mobile": 0.5, "desktop": 0.4, "tablet": 0.1}
-browser_weights = {"chrome": 0.4, "firefox": 0.2, "safari": 0.2, "edge": 0.1, "opera": 0.1}
-channel_weights = {"organic": 0.1, "paid": 0.3, "social": 0.5, "email": 0.1}
-
-device_factors = {"mobile": 1.1, "desktop": 1.5, "tablet": 1.3}
-browser_factors = {"chrome": 1.2, "firefox": 1.0, "safari": 1.1, "edge": 0.9, "opera": 0.8}
-channel_factors = {"organic": 1.2, "paid": 0.8, "social": 1.3, "email": 0.8}
+import itertools
 
 
-# ===== Helper ===== #
+# ---- Input Data ----
+
+np.random.seed(42)
+
+filename = '/Users/erichaavind-berman/Documents/Development/Analytics-training/public/scenarios/scenario6.csv'
+
+data = {
+  "date": [
+    "2025-05-13",
+    "2025-05-14",
+    "2025-05-15",
+    "2025-05-16",
+    "2025-05-17",
+    "2025-05-18",
+    "2025-05-19",
+    "2025-05-20",
+    "2025-05-21",
+    "2025-05-22",
+    "2025-05-23",
+    "2025-05-24",
+    "2025-05-25",
+    "2025-05-26",
+    "2025-05-27",
+    "2025-05-28",
+    "2025-05-29",
+    "2025-05-30",
+    "2025-05-31",
+    "2025-06-01",
+    "2025-06-02",
+    "2025-06-03",
+    "2025-06-04",
+    "2025-06-05",
+    "2025-06-06",
+    "2025-06-07",
+    "2025-06-08",
+    "2025-06-09",
+    "2025-06-10",
+    "2025-06-11",
+    "2025-06-12",
+    "2025-06-13",
+    "2025-06-14",
+    "2025-06-15",
+    "2025-06-16",
+    "2025-06-17",
+    "2025-06-18",
+    "2025-06-19",
+    "2025-06-20",
+    "2025-06-21",
+    "2025-06-22",
+    "2025-06-23",
+    "2025-06-24",
+    "2025-06-25",
+    "2025-06-26",
+    "2025-06-27",
+    "2025-06-28",
+    "2025-06-29",
+    "2025-06-30",
+    "2025-07-01",
+    "2025-07-02",
+    "2025-07-03",
+    "2025-07-04",
+    "2025-07-05",
+    "2025-07-06",
+    "2025-07-07",
+    "2025-07-08",
+    "2025-07-09",
+    "2025-07-10",
+    "2025-07-11",
+    "2025-07-12",
+    "2025-07-13",
+    "2025-07-14",
+    "2025-07-15",
+    "2025-07-16",
+    "2025-07-17",
+    "2025-07-18",
+    "2025-07-19",
+    "2025-07-20",
+    "2025-07-21",
+    "2025-07-22",
+    "2025-07-23",
+    "2025-07-24",
+    "2025-07-25",
+    "2025-07-26",
+    "2025-07-27",
+    "2025-07-28",
+    "2025-07-29",
+    "2025-07-30",
+    "2025-07-31",
+    "2025-08-01",
+    "2025-08-02",
+    "2025-08-03",
+    "2025-08-04",
+    "2025-08-05",
+    "2025-08-06",
+    "2025-08-07",
+    "2025-08-08",
+    "2025-08-09",
+    "2025-08-10"
+  ],
+  "visitors": [
+    10646.0,
+    9900.0,
+    11002.0,
+    12220.0,
+    10016.0,
+    10096.0,
+    12533.0,
+    11558.0,
+    10030.0,
+    11425.0,
+    10198.0,
+    10275.0,
+    11275.0,
+    8553.0,
+    8878.0,
+    10469.0,
+    9963.0,
+    11769.0,
+    10260.0,
+    9684.0,
+    13505.0,
+    11386.0,
+    11848.0,
+    9988.0,
+    11212.0,
+    12144.0,
+    10584.0,
+    12648.0,
+    11459.0,
+    11941.0,
+    11618.0,
+    14888.0,
+    12542.0,
+    11265.0,
+    13789.0,
+    11213.0,
+    13152.0,
+    10412.0,
+    11313.0,
+    13376.0,
+    14160.0,
+    13503.0,
+    13210.0,
+    13049.0,
+    11598.0,
+    12664.0,
+    13081.0,
+    15134.0,
+    14287.0,
+    11628.0,
+    14421.0,
+    13579.0,
+    13280.0,
+    15035.0,
+    15660.0,
+    15611.0,
+    13389.0,
+    14158.0,
+    15071.0,
+    15988.0,
+    14177.0,
+    14639.0,
+    13522.0,
+    13485.0,
+    16176.0,
+    16963.0,
+    15186.0,
+    16665.0,
+    15910.0,
+    14681.0,
+    16070.0,
+    17679.0,
+    15713.0,
+    17874.0,
+    12514.0,
+    17068.0,
+    16193.0,
+    15771.0,
+    16359.0,
+    13736.0,
+    16114.0,
+    16944.0,
+    18481.0,
+    15966.0,
+    15669.0,
+    16148.0,
+    18070.0,
+    17387.0,
+    16351.0,
+    17787.0
+  ],
+  "signups": [
+    536.0,
+    529.0,
+    519.0,
+    591.0,
+    477.0,
+    439.0,
+    621.0,
+    570.0,
+    484.0,
+    540.0,
+    434.0,
+    473.0,
+    521.0,
+    373.0,
+    410.0,
+    504.0,
+    533.0,
+    550.0,
+    482.0,
+    441.0,
+    544.0,
+    515.0,
+    537.0,
+    540.0,
+    494.0,
+    551.0,
+    467.0,
+    513.0,
+    544.0,
+    548.0,
+    533.0,
+    608.0,
+    590.0,
+    428.0,
+    607.0,
+    555.0,
+    515.0,
+    414.0,
+    474.0,
+    534.0,
+    524.0,
+    555.0,
+    498.0,
+    545.0,
+    432.0,
+    564.0,
+    491.0,
+    587.0,
+    592.0,
+    409.0,
+    569.0,
+    574.0,
+    451.0,
+    582.0,
+    605.0,
+    619.0,
+    457.0,
+    479.0,
+    579.0,
+    601.0,
+    529.0,
+    546.0,
+    464.0,
+    494.0,
+    590.0,
+    576.0,
+    606.0,
+    603.0,
+    511.0,
+    533.0,
+    517.0,
+    634.0,
+    577.0,
+    573.0,
+    456.0,
+    584.0,
+    567.0,
+    589.0,
+    525.0,
+    418.0,
+    486.0,
+    512.0,
+    584.0,
+    517.0,
+    501.0,
+    533.0,
+    559.0,
+    587.0,
+    488.0,
+    639.0
+  ]
+}
+
+static_weights = {
+    "device": {"mobile": 0.6, "desktop": 0.3, "tablet": 0.1},
+    "browser": {"chrome": 0.5, "firefox": 0.3, "safari": 0.2},
+    "channel": {"organic": 0.7, "paid": 0.3},
+}
+
+interpolated_weights = {
+    "location": {
+        "start": {"northern": 0.4, "southern": 0.2, "eastern": 0.10, "western": 0.2, "central": 0.1},
+        "end":   {"northern": 0.15, "southern": 0.15, "eastern": 0.05, "western": 0.1, "central": 0.40}
+    }
+}
+
+signup_factors = {
+    "device": {"mobile": 1.0, "desktop": 1.2, "tablet": 0.8},
+    "browser": {"chrome": 1.0, "firefox": 0.9, "safari": 1.1},
+    "channel": {"organic": 1.0, "paid": 1.3},
+    "location": {"northern": 1.4, "southern": 1.3, "eastern": 0.8, "western": 1.05, "central": 0.7},
+}
+
+jitter_levels = {
+    "device": 0.02,
+    "browser": 0.05,
+    "channel": 0.10,
+    "location": 0.03
+}
+
+
+# ---- Helpers ----
+
+def jitter_weights(weights, noise_level=0.05):
+    noisy = {k: max(v + np.random.normal(0, noise_level * v), 0.001) for k, v in weights.items()}
+    total = sum(noisy.values())
+    return {k: v / total for k, v in noisy.items()}
+
 def interpolate_weights(start_weights, end_weights, progress):
-    """Linearly interpolate between start and end weights."""
     weights = {k: (1 - progress) * start_weights[k] + progress * end_weights[k] for k in start_weights}
     total = sum(weights.values())
     return {k: v / total for k, v in weights.items()}
 
-def generate_minute_visitors(start, end):
-    minutes = pd.date_range(start=start, end=end, freq='T')[:-1]
-    rows = []
 
-    base = 100
-    day_factor = [1.2, 1.1, 1.0, 1.0, 1.3, 0.8, 0.7]
+# ---- Generator ----
 
-    for minute in minutes:
-        tod = minute.hour + minute.minute / 60
-        weekday = minute.weekday()
-        tf = 2 if 8 <= tod <= 20 else 0.5
-        mins_since_midnight = minute.hour * 60 + minute.minute
-        sin_wave = 0.5 * (1 + np.sin((2 * np.pi / 1440) * (mins_since_midnight - 840)))
-        visitors = base * day_factor[weekday] * tf * (1 + sin_wave)
-        count = max(0, int(visitors + np.random.normal(0, 10)))
-        rows.append((minute, count))
-    return pd.DataFrame(rows, columns=["Minute", "Visitors"])
+def generate_combinations(dimension_weights):
+    dimensions = list(dimension_weights.keys())
+    values = list(dimension_weights.values())
+    all_combos = list(itertools.product(*[list(v.keys()) for v in values]))
+    return dimensions, all_combos
 
-def jitter_weights(base_weights, scale=0.2):
-    keys = list(base_weights.keys())
-    base = np.array(list(base_weights.values()))
-    noise = np.random.normal(1.0, scale, size=len(base))  # Add noise per category
-    noisy = np.clip(base * noise, 0.01, None)  # Avoid zeros
-    return dict(zip(keys, noisy / noisy.sum()))  # Normalize
+def compute_combo_weights(combo, dim_weights_dict):
+    return np.prod([dim_weights_dict[dim][val] for dim, val in zip(dim_weights_dict.keys(), combo)])
 
+def compute_signup_multiplier(combo, signup_factors):
+    return np.prod([signup_factors[dim][val] for dim, val in zip(signup_factors.keys(), combo)])
 
-def simulate_batch_signups(minute_df):
-    results = []
-    two_days_ago = datetime.combine(datetime.now(), time.min) - timedelta(days=3)
+def generate_data_top_down(data, static_weights, interpolated_weights, signup_factors, jitter_levels):
+    df_input = pd.DataFrame(data)
+    num_days = len(df_input)
+    all_rows = []
 
-    # In your outer day loop (or even minute loop if you want more chaos)
-    device_weights_day = jitter_weights(device_weights, scale=0.3)
-    browser_weights_day = jitter_weights(browser_weights, scale=0.3)
-    channel_weights_day = jitter_weights(channel_weights, scale=0.05)
-    
-    device_keys, device_probs = zip(*device_weights_day.items())
-    browser_keys, browser_probs = zip(*browser_weights_day.items())
-    channel_keys, channel_probs = zip(*channel_weights_day.items())
+    for i, (_, row) in enumerate(df_input.iterrows()):
+        date = row["date"]
+        visitors = row["visitors"]
+        target_signups = row["signups"]
+        progress = i / (num_days - 1) if num_days > 1 else 0
 
-    # Generate a random daily multiplier for each day
-    daily_noise = {
-        day: np.clip(np.random.normal(1.0, 0.2), 0.8, 1.2)
-        for day in pd.to_datetime(minute_df["Minute"]).dt.date.unique()
-    }
+        # Interpolated weights with jitter
+        interpolated_day_weights = {
+            dim: jitter_weights(
+                interpolate_weights(w["start"], w["end"], progress),
+                jitter_levels.get(dim, 0.0)
+            )
+            for dim, w in interpolated_weights.items()
+        }
 
-    current_day =  minute_df['Minute'][0].date()
+        # Static weights with jitter
+        static_day_weights = {
+            dim: jitter_weights(weights, jitter_levels.get(dim, 0.0))
+            for dim, weights in static_weights.items()
+        }
 
-    for _, row in minute_df.iterrows():
-        minute = row["Minute"]
-        day = minute.date()
-        
-        # reset the jitter weights for each factor every day
-        if day != current_day:
-            device_weights_day = jitter_weights(device_weights, scale=0.3)
-            browser_weights_day = jitter_weights(browser_weights, scale=0.3)
-            channel_weights_day = jitter_weights(channel_weights, scale=0.05)
-            current_day = day
-            
-            device_keys, device_probs = zip(*device_weights_day.items())
-            browser_keys, browser_probs = zip(*browser_weights_day.items())
-            channel_keys, channel_probs = zip(*channel_weights_day.items())
-        
-        total = row["Visitors"]
+        # Combine
+        full_weights = {**static_day_weights, **interpolated_day_weights}
+        dimensions, all_combos = generate_combinations(full_weights)
 
-        if total == 0:
-            continue
+        # Compute combo probabilities
+        combo_weights = [compute_combo_weights(combo, full_weights) for combo in all_combos]
+        combo_probs = np.array(combo_weights) / sum(combo_weights)
 
-        # Multinomial sampling for breakdowns
-        device_counts = np.random.multinomial(total, device_probs)
-        for device, d_count in zip(device_keys, device_counts):
-            if d_count == 0:
-                continue
-            browser_counts = np.random.multinomial(d_count, browser_probs)
-            for browser, b_count in zip(browser_keys, browser_counts):
-                if b_count == 0:
-                    continue
-                channel_counts = np.random.multinomial(b_count, channel_probs)
-                for channel, c_count in zip(channel_keys, channel_counts):
-                    if c_count == 0:
-                        continue
+        # Sample visitors using multinomial
+        visitors_per_combo = np.random.multinomial(visitors, combo_probs)
 
-                    # Main conversion rate with multiple noise factors
-                    conv_rate = BASE_CONVERSION
-                    conv_rate *= device_factors[device]
-                    conv_rate *= browser_factors[browser]
-                    conv_rate *= channel_factors[channel]
+        # Compute signups
+        signup_multipliers = [compute_signup_multiplier(combo, signup_factors) for combo in all_combos]
+        signup_rates = np.array(signup_multipliers)
+        scaled_rates = target_signups / sum(visitors_per_combo * signup_rates) * signup_rates
+        signups_per_combo = [
+            np.random.binomial(v, min(rate, 1)) if v > 0 else 0
+            for v, rate in zip(visitors_per_combo, scaled_rates)
+        ]
 
-                    # Apply big noise
-                    conv_rate *= np.clip(np.random.normal(1.0, 0.3), 0.5, 1.5)  # Individual batch noise
-                    conv_rate *= daily_noise[day]  # Daily noise
-                    conv_rate *= np.random.uniform(0.7, 1.3)  # Time-of-day randomness
+        # Build output
+        for combo, v, s in zip(all_combos, visitors_per_combo, signups_per_combo):
+            row_out = {"date": date}
+            for dim, val in zip(dimensions, combo):
+                row_out[dim] = val
+            row_out["visitors"] = v
+            row_out["signups"] = s
+            all_rows.append(row_out)
 
-                    if (minute > two_days_ago and channel == "social"):
-                        c_count = round(c_count/5)
+    return pd.DataFrame(all_rows)
 
-                    conv_rate = np.clip(conv_rate, 0, 1)  # Valid probability range
-                    signups = np.random.binomial(c_count, conv_rate)
+# ---- Run It ----
 
-                    results.append({
-                        "Minute": minute,
-                        "Day": day,
-                        "Device": device,
-                        "Browser": browser,
-                        "Channel": channel,
-                        "Visitors": c_count,
-                        "Signups": signups
-                    })
+df = generate_data_top_down(data, static_weights, interpolated_weights, signup_factors, jitter_levels)
 
-    return pd.DataFrame(results)
+df.to_csv(filename, index=False)
+
+print("Data generated")
 
 
-
-# ===== Run All ===== #
-minute_data = generate_minute_visitors(START_DATE, END_DATE)
-batched_df = simulate_batch_signups(minute_data)
-
-# Daily aggregation
-daily = batched_df.groupby(["Day", "Device", "Browser", "Channel"]).agg(
-    {"Visitors": "sum", "Signups": "sum"}
-).reset_index()
-
-daily.to_csv(filename, index=False)
-
-# Plot daily signup rate
-summary = batched_df.groupby("Day").agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-summary["Signup Rate"] = summary["Signups"] / summary["Visitors"]
-
-plt.figure(figsize=(10, 5))
-plt.plot(summary["Day"], summary["Signup Rate"], marker='o', color='teal')
-plt.title("Daily Signup Rate")
-plt.xlabel("Day")
-plt.ylabel("Signup Rate")
-plt.ylim(0, summary["Signup Rate"].max() * 1.1)
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+# import matplotlib.pyplot as plt
+# import seaborn as sns
 
 
-plt.figure(figsize=(10, 5))
-plt.plot(summary["Day"], summary["Signups"], marker='o', color='teal')
-plt.title("Daily Signups")
-plt.xlabel("Day")
-plt.ylabel("Signups")
-plt.ylim(0, summary["Signups"].max() * 1.1)
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+# def visualize_data_seaborn(df, breakdown_columns):
+#     df = df.copy()
+#     df["Signup Rate"] = df["Signups"] / df["Visitors"]
 
+#     # Set plot style
+#     sns.set_theme(style="whitegrid")
 
-sns.set(style="whitegrid")
+#     # --- Overall Trends ---
+#     overall = df.groupby("Date")[["Visitors", "Signups"]].sum().reset_index()
+#     overall["Signup Rate"] = overall["Signups"] / overall["Visitors"]
 
-# Make sure signup rate exists
-def plot_breakdowns(df, breakdown_col, axes, row):
-    unique_values = df[breakdown_col].unique()
+#     fig, ax1 = plt.subplots(figsize=(10, 5))
+#     ax2 = ax1.twinx()
 
-    # Plot: Visitors
-    for val in unique_values:
-        subset = df[df[breakdown_col] == val]
-        axes[row, 0].plot(subset["Day"], subset["Visitors"], marker='o', label=val)
-    
-    axes[row, 0].set_title(f"{breakdown_col} - Visitors")
-    axes[row, 0].set_ylabel("Visitors")
-    axes[row, 0].set_ylim(bottom=0)
-    axes[row, 0].legend(title=breakdown_col)
-    
-    # Plot: Signup Rate
-    for val in unique_values:
-        subset = df[df[breakdown_col] == val]
-        axes[row, 1].plot(subset["Day"], subset["Signup Rate"], marker='o', label=val)
-    
-    axes[row, 1].set_title(f"{breakdown_col} - Signup Rate")
-    axes[row, 1].set_ylabel("Signup Rate")
-    axes[row, 1].set_ylim(bottom=0)
-    axes[row, 1].legend(title=breakdown_col)
+#     sns.lineplot(data=overall, x="Date", y="Visitors", ax=ax1, label="Visitors", color="blue",ci=None)
+#     sns.lineplot(data=overall, x="Date", y="Signups", ax=ax1, label="Signups", color="green",ci=None)
+#     sns.lineplot(data=overall, x="Date", y="Signup Rate", ax=ax2, label="Signup Rate", color="orange", linestyle="--",ci=None)
 
-# Set up the figure with 3 rows and 2 columns for the breakdowns
-fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(16, 12), sharex='col')
-fig.suptitle("Visitors and Signup Rates by Breakdown", fontsize=18, y=1.02)
+#     ax1.set_ylabel("Visitors / Signups")
+#     ax2.set_ylabel("Signup Rate")
+#     ax1.set_title("Overall Trends")
+#     ax1.legend(loc="upper left")
+#     ax2.legend(loc="upper right")
+#     plt.xticks(rotation=45)
+#     plt.tight_layout()
+#     plt.show()
 
-# Prepare and plot for Device breakdown
-bkdn = batched_df.groupby(["Day", "Device"]).agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-bkdn["Signup Rate"] = bkdn["Signups"] / bkdn["Visitors"]
-plot_breakdowns(bkdn, "Device", axes, 0)
+#     # --- Breakdowns ---
+#     metrics = ["Visitors", "Signups", "Signup Rate"]
 
-# Prepare and plot for Browser breakdown
-bkdn = batched_df.groupby(["Day", "Browser"]).agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-bkdn["Signup Rate"] = bkdn["Signups"] / bkdn["Visitors"]
-plot_breakdowns(bkdn, "Browser", axes, 1)
+#     for breakdown in breakdown_columns:
+#         fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(10, 12), sharex=True)
+#         fig.suptitle(f"Breakdown by {breakdown}", fontsize=16)
 
-# Prepare and plot for Channel breakdown
-bkdn = batched_df.groupby(["Day", "Channel"]).agg({"Visitors": "sum", "Signups": "sum"}).reset_index()
-bkdn["Signup Rate"] = bkdn["Signups"] / bkdn["Visitors"]
-plot_breakdowns(bkdn, "Channel", axes, 2)
+#         for idx, metric in enumerate(metrics):
+#             sns.lineplot(
+#                 data=df,
+#                 x="Date",
+#                 y=metric,
+#                 hue=breakdown,
+#                 ax=axes[idx],
+#                 ci=None,
+#             )
+#             axes[idx].set_title(metric)
+#             axes[idx].legend(title=breakdown, bbox_to_anchor=(1.05, 1), loc='upper left')
+#             axes[idx].tick_params(axis='x', rotation=45)
 
-# Rotate x-axis labels for better visibility
-for ax in axes[-1]:  # Only on the bottom row
-    ax.set_xlabel("Day")
-    for label in ax.get_xticklabels():
-        label.set_rotation(45)
+#         plt.tight_layout(rect=[0, 0, 0.85, 0.96])
+#         plt.show()
 
-plt.tight_layout()
-plt.subplots_adjust(top=0.92)  # Make room for the main title
-plt.show()
+# visualize_data_seaborn(df, breakdown_columns=["Device", "Browser", "Channel", "Location"])

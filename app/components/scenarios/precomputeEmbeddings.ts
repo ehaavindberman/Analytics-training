@@ -1,11 +1,11 @@
 // update the scenario import
-// npx tsx app/scenarios/precomputeEmbeddings.ts
+// npx tsx app/components/scenarios/precomputeEmbeddings.ts
 
 import { pipeline } from "@xenova/transformers"
 import fs from "fs"
-import { scenario5 } from "./scenario5"
+import { scenario6 } from "./scenario6"
 
-const scn = scenario5
+const scn = scenario6
 
 const embeddingFile = `/scenarios/scenario${scn.id}-embeddings.json`
 
