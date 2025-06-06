@@ -14,10 +14,6 @@ export type ScenarioProps = {
   category: "intro" | "notflix" | "sweater"
   introText: string[]
   successText: string[]
-  feedbackText: {
-    correct: string
-    incorrect: string
-  }
   extraInfoButtons: {
     icon: string
     label: string

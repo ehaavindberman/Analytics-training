@@ -17,10 +17,6 @@ export const scenario6: ScenarioProps = {
     "Nice job! Over the past 3 months the share of users from the central has slowly increased and share from others has slowly dropped, the users from central signup at a lower rate.",
     "This means that the overall signup rate decreased over time, we'll have to shift our marketing focus outside of central!"
   ],
-  feedbackText: {
-    correct: "Correct!",
-    incorrect: "Not quite. Try again.",
-  },
   extraInfoButtons: [
     {
       icon: "Glasses",

@@ -11,10 +11,6 @@ export const scenario2: ScenarioProps = {
   successText: [
     "Great work finding that social visitors radically decreased, we took this to the social team and they found an issue with the links on their most recent posts which they've quickly fixed.",
   ],
-  feedbackText: {
-    correct: "Correct!",
-    incorrect: "Not quite. Try again.",
-  },
   extraInfoButtons: [
     {
       icon: "Glasses",

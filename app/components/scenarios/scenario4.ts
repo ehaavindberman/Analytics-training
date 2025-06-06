@@ -12,10 +12,6 @@ export const scenario4: ScenarioProps = {
     "Great work figuring out that since we released the new fancy sweaters, we've had fewer people purchasing but overall revenue is not impacted.",
     "We'll have to sit as a team and discuss if we care more about volume or revenue in this case."
   ],
-  feedbackText: {
-    correct: "Correct!",
-    incorrect: "Not quite. Try again.",
-  },
   extraInfoButtons: [
     {
       icon: "Glasses",

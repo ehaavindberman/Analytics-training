@@ -18,10 +18,6 @@ export const scenario5: ScenarioProps = {
     "Great work figuring out that the share of paid users as been steadily increasing and those users have very low retention rates leading to lower retention overall.",
     "We will talk with our marketing team about this, as it appears we're cannibalising our other channels and reallocate some funds for organic growth."
   ],
-  feedbackText: {
-    correct: "Correct!",
-    incorrect: "Not quite. Try again.",
-  },
   extraInfoButtons: [
     {
       icon: "Glasses",
