@@ -16,7 +16,7 @@ np.random.seed(42)
 filename = '/Users/erichaavind-berman/Documents/Development/Analytics-training/public/scenarios/scenario6.csv'
 
 data = {
-  "date": [
+  "day": [
     "2025-05-13",
     "2025-05-14",
     "2025-05-15",
@@ -355,7 +355,7 @@ def generate_data_top_down(data, static_weights, interpolated_weights, signup_fa
     all_rows = []
 
     for i, (_, row) in enumerate(df_input.iterrows()):
-        date = row["date"]
+        date = row["day"]
         visitors = row["visitors"]
         target_signups = row["signups"]
         progress = i / (num_days - 1) if num_days > 1 else 0
@@ -397,7 +397,7 @@ def generate_data_top_down(data, static_weights, interpolated_weights, signup_fa
 
         # Build output
         for combo, v, s in zip(all_combos, visitors_per_combo, signups_per_combo):
-            row_out = {"date": date}
+            row_out = {"day": date}
             for dim, val in zip(dimensions, combo):
                 row_out[dim] = val
             row_out["visitors"] = v

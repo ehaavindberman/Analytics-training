@@ -59,7 +59,7 @@ export const scenario6: ScenarioProps = {
     "browser": ["chrome", "firefox", "safari"],
     "location": ["northern", "southern", "eastern", "western", "central"],
   },
-  headers: ["date", "device", "browser", "channel", "location", "visitors", "signups"],
+  headers: ["day", "device", "browser", "channel", "location", "visitors", "signups"],
   types: ["date", "string", "string", "string", "string", "number", "number"],
   calculatedFields: [
     {
@@ -70,7 +70,7 @@ export const scenario6: ScenarioProps = {
       format: "pct",
     },
   ],
-  xAxis: "date",
+  xAxis: "day",
   correctAnswers: [
     "the percentage of users visiting from central has increased and they have a lower signup rate, so our overall signup rate has decreased, however overall signups have remained constant.",
     "more people coming from central with a lower signup rate.",
