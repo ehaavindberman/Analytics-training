@@ -20,8 +20,8 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
 
   const groupedScenarios = {
     intro: scenarios.filter(s => s.category === "intro"),
-    notflix: scenarios.filter(s => s.category === "notflix"),
     sweater: scenarios.filter(s => s.category === "sweater"),
+    notflix: scenarios.filter(s => s.category === "notflix"),
     hairbnb: [],
   }
 
@@ -76,27 +76,27 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
 
         <div className="flex flex-row flex-wrap gap-4 justify-center">
           <ScenarioCategoryCard
-            title="Notflix"
-            description="Subscription service, people subscribe, we enjoy"
-            scenarios={groupedScenarios.notflix}
-            completedScenarios={completedScenarios}
-            onSelectScenario={onSelectScenario}
-            isLocked={!allIntroCompleted}
-          />
+              title="Weather sweater"
+              description="We sell sweaters to real people, we love direct sales!"
+              scenarios={groupedScenarios.sweater}
+              completedScenarios={completedScenarios}
+              onSelectScenario={onSelectScenario}
+              isLocked={!allIntroCompleted}
+            />
+            
+            <ScenarioCategoryCard
+              title="Notflix"
+              description="Subscription service, people subscribe, we enjoy"
+              scenarios={groupedScenarios.notflix}
+              completedScenarios={completedScenarios}
+              onSelectScenario={onSelectScenario}
+              isLocked={!allIntroCompleted}
+            />
 
-          <ScenarioCategoryCard
-            title="Weather sweater"
-            description="We sell sweaters to real people, we love direct sales!"
-            scenarios={groupedScenarios.sweater}
-            completedScenarios={completedScenarios}
-            onSelectScenario={onSelectScenario}
-            isLocked={!allIntroCompleted}
-          />
-
-          <ComingSoonScenarioCard
-            title="HairBnB"
-            description="Finding homes for all the barbers out there"
-          />
+            <ComingSoonScenarioCard
+              title="HairBnB"
+              description="Finding homes for all the barbers out there"
+            />
         </div>
       </div>
     </div>

@@ -3,9 +3,9 @@
 
 import { pipeline } from "@xenova/transformers"
 import fs from "fs"
-import { scenario7 } from "./scenario7"
+import { scenario2 } from "./scenario2"
 
-const scn = scenario7
+const scn = scenario2
 
 const embeddingFile = `/scenarios/scenario${scn.id}-embeddings.json`
 
