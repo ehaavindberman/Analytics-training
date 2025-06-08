@@ -8,7 +8,7 @@ import type { ScenarioProps } from "@/app/components/types"
 
 export const scenario5: ScenarioProps = {
   id: 5,
-  title: "Notflix",
+  title: "Attention retention",
   category: "notflix",
   introText: [
     "Welcome to Notflix, we sell subscriptions and have noticed that recently our retention rates have been on a downward trend.",

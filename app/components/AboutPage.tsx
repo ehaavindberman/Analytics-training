@@ -51,6 +51,10 @@ const AboutPage = () => {
           and a library of scenarios similar to Duolingo and Khan Academy with branching paths a user can take based on the different metrics and company types they're interested in.
           Ultimately, scenarios could even be created and uploaded by the community for private and public use.
         </p>
+        <br></br>
+        <p className="text-base text-gray-700">
+          The next steps I'm taking for FyreDrill include:
+        </p>
         <ul className="list-disc list-inside text-base text-gray-700 ml-4">
           <li>Many more scenarios, I have tons of ideas especially for higher difficulty</li>
           <li>Improved answer AI</li>
