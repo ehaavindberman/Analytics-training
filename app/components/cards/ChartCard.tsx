@@ -9,7 +9,7 @@ type ChartCardProps = {
   yAxis: string
   breakdown: string
   chartType: "line" | "area"
-  filters: { [key: string]: string }
+  filters: { [filterName: string]: string[] | "all" }
 }
 
 export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: ChartCardProps) {
