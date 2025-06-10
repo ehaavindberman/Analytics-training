@@ -23,7 +23,7 @@ type Props = {
   yAxis: string
   breakdown: string
   chartType: "line" | "area"
-  filters: { [filterName: string]: string }
+  filters: { [filterName: string]: string[] | "all" }
 }
 
 function getAllRequiredFields(scenario: ScenarioProps): string[] {
@@ -50,7 +50,9 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
     const filteredData = _.filter(data, (row) =>
       _.every(Object.entries(filters), ([key, value]) => {
         const rowValue = _.get(row, key);
-        return value === "all" || rowValue == value;
+        if (value === "all") return true;
+        if (Array.isArray(value)) return value.includes(rowValue);
+        return rowValue === value;
       })
     )
 
