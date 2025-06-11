@@ -163,6 +163,31 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
       }
     }
 
+    if (chartType === "area" && breakdown !== "none") {
+      for (const row of aggregated) {
+        let total = 0
+        for (const value of allBreakdownValues) {
+          const val = row[value]?.[yAxis]
+          if (typeof val === "number") {
+            total += val
+          }
+        }
+        for (const value of allBreakdownValues) {
+          if (total > 0 && row[value]?.[yAxis] != null) {
+            row[value][yAxis] = (row[value][yAxis] / total) * 100
+            if (row[value][`trend_${yAxis}`] != null) {
+              row[value][`trend_${yAxis}`] = (row[value][`trend_${yAxis}`] / total) * 100
+            }
+          } else {
+            row[value][yAxis] = 0;
+            if (row[value][`trend_${yAxis}`] != null) {
+              row[value][`trend_${yAxis}`] = 0
+            }
+          }
+        }
+      }
+    }
+
     return aggregated
   }, [data, breakdown, filters, scenario, yAxis])
 
@@ -182,7 +207,19 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
         <ChartComponent data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={scenario.xAxis} />
-          <YAxis tickFormatter={(value) => formatValue(value, scenario.yAxisFormats[yAxis])} />
+          {/* <YAxis tickFormatter={(value) => formatValue(value, scenario.yAxisFormats[yAxis])} /> */}
+          <YAxis
+            domain={
+              chartType === "area" && breakdown !== "none"
+                ? [0, 100]
+                : undefined
+            }
+            tickFormatter={(value) =>
+              chartType === "area" && breakdown !== "none"
+                ? `${value.toFixed(0)}%`
+                : formatValue(value, scenario.yAxisFormats[yAxis])
+            }
+          />
           <Tooltip content={<CustomTooltip scenario={scenario} yAxis={yAxis} />} />
           <Legend />
           {breakdown === "none"
