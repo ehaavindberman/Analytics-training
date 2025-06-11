@@ -8,6 +8,8 @@ type CalculatedField = {
 
 type YAxisFormat = "number" | "pct" | "currency"
 
+export type Filters = { [key: string]: string[] | "all" }
+
 export type ScenarioProps = {
   id: number
   title: string

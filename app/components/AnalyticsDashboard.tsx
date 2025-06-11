@@ -14,7 +14,7 @@ import { FiltersCard } from "./cards/FiltersCard"
 import { DataDictionaryCard } from "./cards/DataDictionaryCard"
 import { ExtraInfoCard } from "./cards/ExtraInfoCard"
 import ScenarioDescriptionCard from "./cards/ScenarioDescriptionCard"
-import type { ScenarioProps } from "@/app/components/types"
+import type { ScenarioProps, Filters } from "@/app/components/types"
 import { testUserAnswer } from "./TestUserAnswer"
 import { ExtraInfoButton } from "./types"
 
@@ -44,15 +44,15 @@ export default function AnalyticsDashboard({
   const [isCompleted, setIsCompleted] = useState(false)
   const [isTimerRunning, setIsTimerRunning] = useState(true)
   const [time, setTime] = useState(initialTime)
-  const [filters, setFilters] = useState<{ [key: string]: string }>({})
+  const [filters, setFilters] = useState<Filters>({})
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     const initialFilters = Object.keys(scenario.filters).reduce((acc, key) => {
       acc[key] = "all"
       return acc
-    }, {} as { [key: string]: string })
-
+    }, {} as Filters)
+  
     setFilters(initialFilters)
   }, [scenario])
 

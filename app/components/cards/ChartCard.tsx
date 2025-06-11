@@ -2,7 +2,7 @@ import React from "react"
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import DataChart from "../DataChart"
-import type { ScenarioProps } from "@/app/components/types"
+import type { ScenarioProps, Filters } from "@/app/components/types"
 import { formatLabel } from "@/utils/format"
 
 type ChartCardProps = {
@@ -10,7 +10,7 @@ type ChartCardProps = {
   yAxis: string
   breakdown: string
   chartType: "line" | "area"
-  filters: { [filterName: string]: string[] | "all" }
+  filters: Filters
 }
 
 

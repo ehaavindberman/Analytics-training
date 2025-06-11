@@ -16,7 +16,7 @@ import {
 import CustomTooltip from "@/app/components/cards/CustomTooltip"
 import _ from "lodash"
 import DataChartLoader from "./DataChartLoader"
-import type { ScenarioProps } from "@/app/components/types"
+import type { ScenarioProps, Filters } from "@/app/components/types"
 import { formatValue, formatLabel } from "@/utils/format"
 
 type Props = {
@@ -24,7 +24,7 @@ type Props = {
   yAxis: string
   breakdown: string
   chartType: "line" | "area"
-  filters: { [filterName: string]: string[] | "all" }
+  filters: Filters
   showTrend: boolean
 }
 
