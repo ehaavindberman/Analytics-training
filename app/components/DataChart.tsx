@@ -25,6 +25,7 @@ type Props = {
   breakdown: string
   chartType: "line" | "area"
   filters: { [filterName: string]: string[] | "all" }
+  showTrend: boolean
 }
 
 
@@ -45,7 +46,7 @@ function getAllRequiredFields(scenario: ScenarioProps): string[] {
 }
 
 
-export default function DataChart({ scenario, yAxis, breakdown, filters, chartType }: Props) {
+export default function DataChart({ scenario, yAxis, breakdown, filters, chartType, showTrend }: Props) {
   const data = DataChartLoader({ scenario })
 
   const chartData = useMemo(() => {
@@ -130,7 +131,6 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
       }
     }
 
-    // Add trend lines
     if (breakdown === "none") {
       const values = aggregated.map((row, i) => ({ x: i, y: row[yAxis] })).filter(p => typeof p.y === 'number')
       const n = values.length
@@ -195,7 +195,7 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
                   fill={chartType === "area" ? colors[0] : undefined}
                   name={formatLabel(yAxis)}
                 />,
-                <Line
+                showTrend && <Line
                   key="trend-line"
                   type="linear"
                   dot={false}
@@ -216,7 +216,7 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
                   name={formatLabel(`${value} ${yAxis}`)}
                   stackId={chartType === "area" ? "1" : undefined}
                 />,
-                <Line
+                showTrend && <Line
                   key={`${value}-trend`}
                   type="linear"
                   dot={false}

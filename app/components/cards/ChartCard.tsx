@@ -1,4 +1,5 @@
 import React from "react"
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import DataChart from "../DataChart"
 import type { ScenarioProps } from "@/app/components/types"
@@ -12,13 +13,28 @@ type ChartCardProps = {
   filters: { [filterName: string]: string[] | "all" }
 }
 
+
 export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: ChartCardProps) {
+
+  const [showTrend, setShowTrend] = useState(false)
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{formatLabel(yAxis)} per {formatLabel(scenario.xAxis)} {breakdown !== "none" && ` by ${formatLabel(breakdown)}`}</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>
+          {formatLabel(yAxis)} per {formatLabel(scenario.xAxis)} {breakdown !== "none" && ` by ${formatLabel(breakdown)}`}
+        </CardTitle>
+        <div className="flex items-center space-x-2 text-sm">
+          <input
+            type="checkbox"
+            checked={showTrend}
+            onChange={(e) => setShowTrend(e.target.checked)}
+            id="toggle-trend"
+          />
+          <label htmlFor="toggle-trend">Show trend lines</label>
+        </div>
       </CardHeader>
+
       <CardContent>
         <div className="h-[400px] w-full">
           <DataChart 
@@ -27,6 +43,7 @@ export function ChartCard({ scenario, yAxis, breakdown, chartType, filters }: Ch
             breakdown={breakdown} 
             filters={filters} 
             chartType={chartType} 
+            showTrend={showTrend}
           />
         </div>
       </CardContent>
