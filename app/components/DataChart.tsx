@@ -189,7 +189,7 @@ export default function DataChart({ scenario, yAxis, breakdown, filters, chartTy
     }
 
     return aggregated
-  }, [data, breakdown, filters, scenario, yAxis])
+  }, [data, breakdown, filters, scenario, yAxis, , chartType])
 
   const breakdownValues = useMemo(() => {
     if (breakdown === "none") return []
