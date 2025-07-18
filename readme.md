@@ -1,10 +1,16 @@
-FyreDrill is a web-based training app for developing diagnostic data analysis skills. Users complete scenario-based challenges by exploring simulated dashboards and writing up their findings. Each completed scenario improves their rank, encouraging continued skill growth through fun, focused practice.
+# 🔥 FyreDrill
 
-🛠️ Running Locally
+**FyreDrill** is a web-based training app for developing data detective skills. Users complete scenario-based challenges by exploring simulated dashboards and writing up their findings.
+
+**🌐 Live Site**
+
+Check it out at [fyredrill.dev](https://www.fyredrill.dev)
+
+**🛠️ Running Locally**
 
     Clone the repo
-    git clone https://github.com/yourname/fyredrill.git
-    cd fyredrill
+    git clone https://github.com/ehaavindberman/Analytics-training.git
+    cd Analytics-training
     
     Install dependencies
     npm install
@@ -12,11 +18,7 @@ FyreDrill is a web-based training app for developing diagnostic data analysis sk
     Start the dev server
     npm run dev
 
-🌐 Live Site
-
-Check it out at fyredrill.dev
-
-🧠 Why FyreDrill?
+**🧠 Why FyreDrill?**
 
 Analysts don’t get better by reading — they get better by doing.
-FyreDrill provides a space to practice the core skill of diagnosing what’s going wrong in a dataset, quickly and clearly. It’s like a fire drill — but for your brain.
+FyreDrill provides a space to practice the core skill of diagnosing what’s going wrong with data, quickly and clearly.
