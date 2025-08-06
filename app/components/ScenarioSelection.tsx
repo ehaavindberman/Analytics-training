@@ -14,6 +14,12 @@ type Props = {
   completedScenarios: CompletedScenario[]
 }
 
+function isScenarioLocked(index: number, group: ScenarioProps[], completed: CompletedScenario[]) {
+  if (index === 0) return false
+  const previousScenarioId = group[index - 1].id
+  return !completed.some(s => s.id === previousScenarioId)
+}
+
 export default function ScenarioSelection({ onSelectScenario, completedScenarios }: Props) {
 
   const totalTime = completedScenarios.reduce((acc, cur) => acc + cur.time, 0)
@@ -44,7 +50,7 @@ export default function ScenarioSelection({ onSelectScenario, completedScenarios
           <CardContent className="flex flex-row flex-wrap justify-center gap-4">
             {groupedScenarios.intro.map((scenario, index) => {
               const completed = completedScenarios.find(s => s.id === scenario.id)
-              const isLocked = index > 0 && !completedScenarios.find(s => s.id === scenario.id - 1)
+              const isLocked = isScenarioLocked(index, groupedScenarios.intro, completedScenarios)
 
               return (
                 <Card key={scenario.id} className="border p-4 mr-3 w-60">

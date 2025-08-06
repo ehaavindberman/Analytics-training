@@ -5,7 +5,7 @@ export const scenario3: ScenarioProps = {
   title: "Signup rate drop!",
   category: "intro",
   introText: [
-    "The CMO was poking around in our dashbaords and noticed that the last few days we've had a decrease in signup rates!",
+    "The CMO was poking around in our dashboards and noticed that the last few days we've had a decrease in signup rates!",
     "Let's get this resolved quickly for them. Submit your answer below.",
   ],
   successText: [
